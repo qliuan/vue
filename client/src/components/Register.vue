@@ -2,6 +2,12 @@
   <div class="hello">
     <h1>Register</h1>
     <input
+      type="username"
+      name="username"
+      v-model="username"
+      placeholder="username" />
+    <br>
+    <input
       type="email"
       name="email"
       v-model="email"
@@ -12,6 +18,14 @@
       name="password"
       v-model="password"
       placeholder="password" />
+    <br>
+    <input
+      type="usertype"
+      name="usertype"
+      v-model="usertype"
+      placeholder="usertype" />
+    <br>
+    <div class="error" v-html="error" />
     <br>
     <button
       @click='register'>
@@ -27,8 +41,12 @@ export default {
 
   data () {
     return {
+      username: '',
       email: '',
-      password: ''
+      password: '',
+      usertype: '',
+      error: null
+
     }
   },
   // v-model is for 2-way binding
@@ -39,12 +57,18 @@ export default {
   // }
   methods: {
     async register () {
-      console.log('register was clicked', this.email, this.password)
-      const response = await AuthenticationService.register({
-        email: this.email,
-        password: this.password
-      })
-      console.log(response.data)
+      // console.log('register was clicked', this.email, this.password)
+      try {
+        const response = await AuthenticationService.register({
+          username: this.username,
+          email: this.email,
+          password: this.password,
+          usertype: this.usertype
+        })
+        console.log(response.data)
+      } catch (error) {
+        this.error = error.response.data.error
+      }
     }
   }
 }
@@ -52,5 +76,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.error{
+  color: red;
+}
 </style>

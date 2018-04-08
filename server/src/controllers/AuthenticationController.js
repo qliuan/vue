@@ -3,7 +3,7 @@ const connection = require('../config/config').connection
 module.exports = {
   register (req, res) {
     var sql = 'INSERT INTO User VALUES(?,?,?,?)'
-    var sqlPara = ['qliuan', 'qliuan@gmail.com', 'qliuan!', 'ADMIN']
+    var sqlPara = [req.body.username, req.body.email, req.body.password, req.body.usertype]
     // var sql = 'Select Username, UserType From User Where Email=? And Password=?'
     // var sqlPara = ['qliuan@gmail.com', 'qliuan!']
     // res.send({
