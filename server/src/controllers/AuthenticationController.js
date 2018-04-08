@@ -20,5 +20,27 @@ module.exports = {
       console.log(result)
       res.send(result)
     })
+  },
+
+  login (req, res) {
+    var sql = 'select Username, UserType from User where Email = ? and Password = ?'
+    var sqlPara = [req.body.email, req.body.password]
+    connection.query(sql, sqlPara, function (err, result) {
+      console.log(result)
+      if (err) {
+        res.status(500).send({
+          error: 'An error has occured trying to log in'
+        })
+      } else if (!result.length) {
+        res.status(400).send({
+          error: 'Wrong email & password combination.'
+        })
+      } else {
+        res.send({
+          userName: result[0].Username,
+          userType: result[0].UserType
+        })
+      }
+    })
   }
 }
