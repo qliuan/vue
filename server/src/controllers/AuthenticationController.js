@@ -1,44 +1,72 @@
-const connection = require('../config/config').connection
+const config = require('../config/config')
+const connection = config.connection
+const jwt = require('jsonwebtoken')
+
+function jwtSignUser (user) {
+  const ONE_WEEK = 60 * 60 * 24 * 7
+  return jwt.sign(user, config.authentication.jwtSecret, {
+    expiresIn: ONE_WEEK
+  })
+}
+
+const Promise = require('bluebird')
+const bcrypt = Promise.promisifyAll(require('bcrypt-nodejs'))
+
+function hashPassword (password) {
+  const SALT_FACTOR = 8
+  return bcrypt
+    .genSaltAsync(SALT_FACTOR)
+    .then(salt => bcrypt.hashAsync(password, salt, null))
+}
+
+function comparePassword (validpass, pass) {
+  return bcrypt.compareAsync(validpass, pass)
+}
 
 module.exports = {
-  register (req, res) {
+  async register (req, res) {
     var sql = 'INSERT INTO User VALUES(?,?,?,?)'
-    var sqlPara = [req.body.username, req.body.email, req.body.password, req.body.usertype]
-    // var sql = 'Select Username, UserType From User Where Email=? And Password=?'
-    // var sqlPara = ['qliuan@gmail.com', 'qliuan!']
-    // res.send({
-    //   message: `Hello ${req.body.email}! Your user account has been registered`
-    // })
+    var hashedPass = await hashPassword(req.body.password)
+    var sqlPara = [req.body.username, req.body.email, hashedPass, req.body.usertype]
     connection.query(sql, sqlPara, function (err, result) {
       if (err) {
-        console.log('[SELECT ERROR] - ', err.message)
         res.status(400).send({
-          error: 'This email account is in use.'
+          error: 'This email account or the user name is in use.'
         })
         return
       }
-      console.log(result)
       res.send(result)
     })
   },
 
-  login (req, res) {
-    var sql = 'select Username, UserType from User where Email = ? and Password = ?'
-    var sqlPara = [req.body.email, req.body.password]
-    connection.query(sql, sqlPara, function (err, result) {
-      console.log(result)
+  async login (req, res) {
+    var sql = 'select * from User where Email = ?'
+    var hashedPass = await hashPassword(req.body.password)
+    var sqlPara = [req.body.email]
+    connection.query(sql, sqlPara, async function (err, result) {
       if (err) {
         res.status(500).send({
           error: 'An error has occured trying to log in'
         })
       } else if (!result.length) {
-        res.status(400).send({
-          error: 'Wrong email & password combination.'
+        res.status(403).send({
+          error: 'No account found'
         })
       } else {
+        const user = result[0]
+        var flag = await comparePassword(user.Password, hashedPass)
+        console.log('userpass:', user.Password, '/nhashed:', hashedPass, '/nvalid:', flag)
+        res.status(403).send({
+          error: 'Wrong email & password combination.'
+        })
+
+        var string = JSON.stringify(user)
+        const userJSON = JSON.parse(string)
+
         res.send({
-          userName: result[0].Username,
-          userType: result[0].UserType
+          userName: user.Username,
+          userType: user.UserType,
+          token: jwtSignUser(userJSON)
         })
       }
     })

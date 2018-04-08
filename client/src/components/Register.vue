@@ -12,6 +12,7 @@
             v-model="username"
           ></v-text-field>
           <br>
+
           <v-text-field
             label="Email"
             v-model="email"
