@@ -10,14 +10,14 @@ app.use(cors())
 
 app.get('/status', (req, res) => {
   res.send({
-    message: 'Hello World!'
+    message: 'Hello Fu**!'
   })
 })
 
-app.post('/register', (req, res) => {
-  res.send({
-    message: `Hello ${req.body.email}! Your user account has been registered`
-  })
-})
+// app.post('/register', (req, res) => {
+//   res.send({
+//     message: `Hello ${req.body.email}! Your user account has been registered`
+//   })
+// })
 
-app.listen(process.env.PORT || 8081)
+app.listen(process.env.PORT || 8088)
