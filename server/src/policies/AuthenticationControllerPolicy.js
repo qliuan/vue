@@ -17,6 +17,11 @@ module.exports = {
 
     if (error) {
       switch (error.details[0].context.key) {
+        case 'username':
+          res.status(400).send({
+            error: 'Your username cannot be longer than 20 characters'
+          })
+          break
         case 'email':
           res.status(400).send({
             error: 'You must provide a valid email address'
@@ -30,6 +35,11 @@ module.exports = {
               <br>
               2. It must be at least 8 characters in length and not greater than 16 characters in length.
             `
+          })
+          break
+        case 'usertype':
+          res.status(400).send({
+            error: `The usertype is limited to be {'OWNER', 'VISITOR'}`
           })
           break
         default:
