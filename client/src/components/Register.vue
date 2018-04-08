@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import AuthenticationService from "@/services/AuthenticationService"
+import AuthenticationService from '@/services/AuthenticationService'
 // controller
 export default {
 
@@ -39,7 +39,7 @@ export default {
   // }
   methods: {
     async register () {
-      console.log("register was clicked", this.email, this.password)
+      console.log('register was clicked', this.email, this.password)
       const response = await AuthenticationService.register({
         email: this.email,
         password: this.password
