@@ -7,26 +7,31 @@
         </v-toolbar>
 
         <div class="pl-4 pr-4 pt-2 pb-2">
-          <v-text-field
-            label="User Name"
-            v-model="username"
-          ></v-text-field>
-          <br>
-
-          <v-text-field
-            label="Email"
-            v-model="email"
-          ></v-text-field>
-          <br>
-          <v-text-field
-            label="Password"
-            v-model="password"
-          ></v-text-field>
-          <br>
-          <v-text-field
-            label="User Type"
-            v-model="usertype"
-          ></v-text-field>
+          <form
+            name="form"
+            autocomplete="off">
+            <v-text-field
+              label="User Name"
+              v-model="username"
+            ></v-text-field>
+            <br>
+            <v-text-field
+              label="Email"
+              v-model="email"
+            ></v-text-field>
+            <br>
+            <v-text-field
+              label="Password"
+              v-model="password"
+              type="password"
+              autocomplete="new-password"
+            ></v-text-field>
+            <br>
+            <v-text-field
+              label="User Type"
+              v-model="usertype"
+            ></v-text-field>
+          </form>
           <br>
           <div class="error" v-html="error" />
           <br>
@@ -65,7 +70,6 @@ export default {
   // }
   methods: {
     async register () {
-      // console.log('register was clicked', this.email, this.password)
       try {
         const response = await AuthenticationService.register({
           username: this.username,
