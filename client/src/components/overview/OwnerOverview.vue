@@ -1,6 +1,12 @@
 <template>
   <v-layout column>
     <v-flex xs6 offset-xs0>
+
+      <v-text-field
+        label="Search"
+        v-model="search"
+      ></v-text-field>
+
       <v-data-table
         :headers="headers"
         :items="items"
@@ -8,7 +14,6 @@
         class="elevation-1"
       >
         <template slot="items" slot-scope="props">
-
           <td class="text-xs-right">
             <v-btn flat
               @click="detail(props.item)">
@@ -53,14 +58,39 @@ export default {
         { text: 'Avg. Rating', value: 'Avg_Rating' }
       ],
       items: [],
+      data: [],
+      search: '',
+
       error: null
     }
   },
   async mounted () {
-    this.items = (await OverviewService.owner_overview({
+    this.data = (await OverviewService.owner_overview({
       username: this.$store.state.user.Username
     })).data
-    console.log(this.items)
+    this.items = this.data
+  },
+  watch: {
+    search (filter) {
+      console.log(filter.toLowerCase())
+      // filter the data
+      this.items = this.data.filter(
+        // for all objects
+        function (obj) {
+          // for all keys
+          return Object.keys(obj).some(
+            function (key) {
+              try {
+                return obj[key].toString().toLowerCase().indexOf(filter) > -1
+              } catch (err) {
+                console.log('obj', obj, 'key', key)
+                return false
+              }
+            }
+          )
+        }
+      )
+    }
   },
   methods: {
     async detail (property) {
