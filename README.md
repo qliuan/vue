@@ -1,7 +1,7 @@
 # Atlanta Farms, Gardens and Orchards
 ## CS 4400 Final Project
 
-This is the final project for Georgia Tech CS 4400 in 2018 Spring built using nodejs, expressjs, and vuejs.
+This is the final project for Georgia Tech CS 4400 in 2018 Spring built using node.js, express.js, and vue.js.
 
 ## Getting Started
 
