@@ -147,7 +147,6 @@ export default {
         try {
           const animals = await FarmItemService.FarmItem_register({
             Proptype: value,
-            email: this.email,
             isAnimal: true
           })
           this.animalOptions = animals.data
@@ -159,7 +158,6 @@ export default {
         try {
           const crops = await FarmItemService.FarmItem_register({
             Proptype: value,
-            email: this.email,
             isAnimal: false
           })
           this.cropOptions = crops.data
@@ -171,7 +169,6 @@ export default {
         try {
           const crops = await FarmItemService.FarmItem_register({
             Proptype: value,
-            email: this.email,
             isAnimal: false
           })
           this.cropOptions = crops.data
