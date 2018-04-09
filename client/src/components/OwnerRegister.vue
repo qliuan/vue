@@ -172,6 +172,7 @@ export default {
             isAnimal: false
           })
           this.cropOptions = crops.data
+          this.animalOptions = []
           console.log(crops)
         } catch (error) {
           this.error = error.response.data.error

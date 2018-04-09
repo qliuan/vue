@@ -15,6 +15,6 @@ module.exports = (app) => {
   app.post('/login',
     AuthenticationController.login)
 
-  app.post('/FarmItem_register',
+  app.post('/farmitem_register',
     FarmItemController.register)
 }
