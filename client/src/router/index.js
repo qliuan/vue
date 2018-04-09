@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
-import Register from '@/components/Register'
+import OwnerRegister from '@/components/OwnerRegister'
+import VisitorRegister from '@/components/VisitorRegister'
 import Login from '@/components/Login'
 import OwnerOverview from '@/components/overview/OwnerOverview'
 import OwnerPropertyDetail from '@/components/property_detail/OwnerPropertyDetail'
@@ -23,9 +24,14 @@ export default new Router({
       component: Test
     },
     {
-      path: '/register',
-      name: 'register',
-      component: Register
+      path: '/owner_register',
+      name: 'owner_register',
+      component: OwnerRegister
+    },
+    {
+      path: '/visitor_register',
+      name: 'visitor_register',
+      component: VisitorRegister
     },
     {
       path: '/login',
