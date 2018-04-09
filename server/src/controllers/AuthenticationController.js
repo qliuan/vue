@@ -19,14 +19,15 @@ function hashPassword (password) {
     .then(salt => bcrypt.hashAsync(password, salt, null))
 }
 
-function comparePassword (validpass, pass) {
-  return bcrypt.compareAsync(validpass, pass)
+function comparePassword (validpass, loginpass) {
+  return bcrypt.compareAsync(validpass, loginpass)
 }
 
 module.exports = {
   async register (req, res) {
     var sql = 'INSERT INTO User VALUES(?,?,?,?)'
     var hashedPass = await hashPassword(req.body.password)
+    console.log('Hashed Password', hashedPass, 'Length', hashedPass.length)
     var sqlPara = [req.body.username, req.body.email, hashedPass, req.body.usertype]
     connection.query(sql, sqlPara, function (err, result) {
       if (err) {
@@ -41,7 +42,7 @@ module.exports = {
 
   async login (req, res) {
     var sql = 'select * from User where Email = ?'
-    var hashedPass = await hashPassword(req.body.password)
+    var candidatePassword = req.body.password
     var sqlPara = [req.body.email]
     connection.query(sql, sqlPara, async function (err, result) {
       if (err) {
@@ -54,20 +55,22 @@ module.exports = {
         })
       } else {
         const user = result[0]
-        var flag = await comparePassword(user.Password, hashedPass)
-        console.log('userpass:', user.Password, '/nhashed:', hashedPass, '/nvalid:', flag)
-        res.status(403).send({
-          error: 'Wrong email & password combination.'
-        })
+        var pass = candidatePassword
+        var flag = await comparePassword(pass, user.Password)
 
-        var string = JSON.stringify(user)
-        const userJSON = JSON.parse(string)
+        if (!flag) {
+          res.status(403).send({
+            error: 'Wrong email & password combination.'
+          })
+        } else {
+          var string = JSON.stringify(user)
+          const userJSON = JSON.parse(string)
 
-        res.send({
-          userName: user.Username,
-          userType: user.UserType,
-          token: jwtSignUser(userJSON)
-        })
+          res.send({
+            user: user,
+            token: jwtSignUser(userJSON)
+          })
+        }
       }
     })
   }
