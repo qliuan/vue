@@ -1,14 +1,14 @@
-# In-depth Analysis of Felix: the Cat in the Sack
-## COMP 3211 Final Project
+# Atlanta Farms, Gardens and Orchards
+## CS 4400 Final Project
 
 This is the final project for Georgia Tech CS 4400 in 2018 Spring built using nodejs, expressjs, and vuejs.
 
 ## Getting Started
 
 ### Prerequisites
-* [nodejs](https://nodejs.org/en/) - For the backend
-* [expressjs](http://expressjs.com/) - The framework used for the backend
-* [vuejs](https://vuejs.org/) - The famous frontend framework
+* [node.js](https://nodejs.org/en/) - For the backend
+* [express.js](http://expressjs.com/) - The framework used for the backend
+* [vue.js](https://vuejs.org/) - The famous frontend framework
 
 ## Running the program
 
