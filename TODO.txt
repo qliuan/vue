@@ -1,0 +1,63 @@
+/****** By user *****/
+login
+owner_register
+visitor_register
+
+// Owner
+owner_overview
+owner_others_overview
+owner_property_detail
+owner_manage_property // add pending farmitem
+owner_add_property
+
+// Visitor
+visitor_overview
+visitor_history
+visitor_property_detail
+
+// Admin
+admin_manage_property
+admin_unconfirmed_properties
+admin_confirmed_properties
+admin_visitor_overview
+admin_owner_overview
+admin_approved_list
+admin_pending_list
+
+
+
+
+/***** By controller *****/
+Authentication:
+login
+owner_register
+visitor_register
+admin_visitor_overview
+admin_owner_overview
+
+Property:
+owner_overview
+owner_others_overview
+owner_property_detail
+owner_manage_property // add pending farmitem
+owner_add_property
+visitor_overview
+visitor_property_detail
+admin_manage_property
+admin_unconfirmed_properties
+admin_confirmed_properties
+
+FarmItem:
+owner_manage_property // add pending farmitem
+admin_manage_property
+admin_approved_list
+admin_pending_list
+
+Has:
+owner_manage_property // add pending farmitem
+owner_add_property
+admin_manage_property
+
+Visits:
+visitor_history
+visitor_property_detail
