@@ -15,7 +15,7 @@ This is the final project for Georgia Tech CS 4400 in 2018 Spring built using no
 Explain how to get the system running
 
 ### Before running
-Since all the modules are ignored when uploading to github repo, we have to install all packages required.
+Since all the modules are ignored when uploading to github repo, we have to install all packages required.  
 (1) go to /client and run
 ```
 npm install
