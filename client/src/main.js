@@ -5,10 +5,12 @@ import App from './App'
 import router from './router'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
+import bootstrap from '../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss'
 
 Vue.config.productionTip = false
 
 Vue.use(Vuetify)
+Vue.use(bootstrap)
 
 /* eslint-disable no-new */
 new Vue({

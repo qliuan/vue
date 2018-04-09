@@ -3,7 +3,7 @@
     <v-flex xs6 offset-xs0>
       <div class="white elevation-2">
         <v-toolbar flat dense class="cyan" dark>
-          <v-toolbar-title>Register</v-toolbar-title>
+          <v-toolbar-title>Visitor-Register</v-toolbar-title>
         </v-toolbar>
 
         <div class="pl-4 pr-4 pt-2 pb-2">
@@ -23,11 +23,11 @@
           ></v-text-field>
           <br>
           <v-text-field
-            label="User Type"
-            v-model="usertype"
+            label="Confirm Password"
+            v-model="confirm_password"
           ></v-text-field>
           <br>
-          <div class="error" v-html="error" />
+         <div class="error" v-html="error" />
           <br>
           <v-btn
             @click='register'
@@ -51,7 +51,8 @@ export default {
       username: '',
       email: '',
       password: '',
-      usertype: '',
+      confirm_password: '',
+      usertype: 'VISITOR',
       error: null
 
     }
@@ -65,16 +66,20 @@ export default {
   methods: {
     async register () {
       // console.log('register was clicked', this.email, this.password)
-      try {
-        const response = await AuthenticationService.register({
-          username: this.username,
-          email: this.email,
-          password: this.password,
-          usertype: this.usertype
-        })
-        console.log(response.data)
-      } catch (error) {
-        this.error = error.response.data.error
+      if (!(this.password === this.confirm_password)) {
+        this.error = 'Confirm Password must be the same as your Password'
+      } else {
+        try {
+          const response = await AuthenticationService.register({
+            username: this.username,
+            email: this.email,
+            password: this.password,
+            usertype: this.usertype
+          })
+          console.log(response)
+        } catch (error) {
+          this.error = error.response.data.error
+        }
       }
     }
   }

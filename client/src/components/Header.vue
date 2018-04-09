@@ -17,14 +17,14 @@
 
     <v-toolbar-items>
       <v-btn flat dark
-        @click="navigateTo({name: 'register'})">
+        @click="navigateTo({name: 'visitor_register'})">
         Visitor Sign Up
       </v-btn>
     </v-toolbar-items>
 
     <v-toolbar-items>
       <v-btn flat dark
-        @click="navigateTo({name: 'register'})">
+        @click="navigateTo({name: 'owner_register'})">
         Owner Sign Up
       </v-btn>
     </v-toolbar-items>
