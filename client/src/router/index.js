@@ -4,6 +4,9 @@ import HelloWorld from '@/components/HelloWorld'
 import Register from '@/components/Register'
 import Login from '@/components/Login'
 import OwnerOverview from '@/components/overview/OwnerOverview'
+import OwnerPropertyDetail from '@/components/property_detail/OwnerPropertyDetail'
+
+import Test from '@/components/Test'
 
 Vue.use(Router)
 
@@ -13,6 +16,11 @@ export default new Router({
       path: '/',
       name: 'root',
       component: HelloWorld
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: Test
     },
     {
       path: '/register',
@@ -28,6 +36,11 @@ export default new Router({
       path: '/owner_overview',
       name: 'owner_overview',
       component: OwnerOverview
+    },
+    {
+      path: '/owner_property_detail',
+      name: 'owner_property_detail',
+      component: OwnerPropertyDetail
     }
   ]
 })

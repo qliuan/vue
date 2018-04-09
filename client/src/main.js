@@ -8,9 +8,14 @@ import 'vuetify/dist/vuetify.min.css'
 import { sync } from 'vuex-router-sync'
 import store from '@/store/store'
 
+import VueGoodTable from 'vue-good-table'
+// import the styles
+import 'vue-good-table/dist/vue-good-table.css'
+
 Vue.config.productionTip = false
 
 Vue.use(Vuetify)
+Vue.use(VueGoodTable)
 
 sync(store, router)
 
