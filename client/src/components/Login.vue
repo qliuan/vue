@@ -40,7 +40,13 @@ export default {
           email: this.email,
           password: this.password
         })
-        console.log(response.data)
+        if (response.data.userType === 'ADMIN') {
+          this.$router.push({name: 'adminoverview'})
+        } else if (response.data.userType === 'OWNER') {
+          this.$router.push({name: 'owneroverview'})
+        } else {
+          this.$router.push({name: 'visitoroverview'})
+        }
       } catch (error) {
         this.error = error.response.data.error
       }

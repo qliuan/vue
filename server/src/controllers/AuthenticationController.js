@@ -15,7 +15,6 @@ module.exports = {
         res.status(400).send({
           error: 'This email account is in use.'
         })
-        return
       }
       console.log(result)
       res.send(result)
