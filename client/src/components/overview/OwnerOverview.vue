@@ -8,8 +8,13 @@
         class="elevation-1"
       >
         <template slot="items" slot-scope="props">
-          <!-- <td>{{ props.item.Name }}</td> -->
-          <td class="text-xs-right">{{ props.item.Name }}</td>
+
+          <td class="text-xs-right">
+            <v-btn flat
+              @click="detail(props.item)">
+              {{ props.item.Name }}
+            </v-btn>
+          </td>
           <td class="text-xs-right">{{ props.item.Street }}</td>
           <td class="text-xs-right">{{ props.item.City }}</td>
           <td class="text-xs-right">{{ props.item.Zip }}</td>
@@ -23,6 +28,7 @@
           <td class="text-xs-right">{{ props.item.Avg_Rating }}</td>
         </template>
       </v-data-table>
+      <div class="error" v-html="error" />
     </v-flex>
   </v-layout>
 </template>
@@ -46,7 +52,8 @@ export default {
         { text: 'Visits', value: 'Visits' },
         { text: 'Avg. Rating', value: 'Avg_Rating' }
       ],
-      items: []
+      items: [],
+      error: null
     }
   },
   async mounted () {
@@ -54,6 +61,28 @@ export default {
       username: this.$store.state.user.Username
     })).data
     console.log(this.items)
+  },
+  methods: {
+    async detail (property) {
+      console.log(property)
+      // already get item, redirect to property details
+
+      // try {
+      //   const response = await PropertyService.detail({
+      //     ID: property.ID,
+      //     user: this.$store.state.user
+      //   })
+      //   console.log(response.data)
+
+      //   // jump to owner_overview page
+      //   this.$router.push({
+      //     name: 'owner_property_detail'
+      //   })
+
+      // } catch (error) {
+      //   this.error = error.response.data.error
+      // }
+    }
   }
 }
 </script>
