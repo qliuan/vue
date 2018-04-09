@@ -5,6 +5,8 @@ import Register from '@/components/Register'
 import Login from '@/components/Login'
 import OwnerOverview from '@/components/overview/OwnerOverview'
 
+import Test from '@/components/Test'
+
 Vue.use(Router)
 
 export default new Router({
@@ -13,6 +15,11 @@ export default new Router({
       path: '/',
       name: 'root',
       component: HelloWorld
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: Test
     },
     {
       path: '/register',
