@@ -13,7 +13,12 @@ module.exports = {
       usertype: Joi.string().valid('ADMIN', 'OWNER', 'VISITOR')
     }
 
-    const {error} = Joi.validate(req.body, schema)
+    const {error} = Joi.validate({
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+      usertype: req.body.usertype
+    }, schema)
 
     if (error) {
       switch (error.details[0].context.key) {
@@ -44,7 +49,7 @@ module.exports = {
           break
         default:
           res.status(400).send({
-            error: 'Invalid registration information'
+            error: error
           })
       }
     } else {

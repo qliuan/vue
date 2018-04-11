@@ -34,12 +34,10 @@ module.exports = {
         res.status(400).send({
           error: 'This email account or the user name is in use.'
         })
-        return
       }
       res.send(result)
     })
   },
-
   async login (req, res) {
     var sql = 'select * from User where Email = ?'
     var candidatePassword = req.body.password
