@@ -1,6 +1,6 @@
 /****** By user *****/
 login (done)
-owner_register
+owner_register (done)
 visitor_register
 
 // Owner
@@ -9,7 +9,7 @@ owner_others_overview (done)
 owner_property_detail (done)
 owner_other_property_detail (done)
 owner_manage_property // add pending farmitem
-owner_add_property
+owner_add_property (done)
 
 // Visitor
 visitor_overview
