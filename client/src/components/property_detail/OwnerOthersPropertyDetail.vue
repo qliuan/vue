@@ -52,7 +52,7 @@ export default {
       property: {},
       animals: [],
       crops: [],
-      titles: ['Name', 'Owner', 'Email', 'Street', 'City', 'Zip', 'Size', 'PropertyType', 'IsPublic', 'IsCommercial', 'ID', 'IsValid', 'Visits', 'Avg_Rating'],
+      titles: ['Name', 'Owner', 'Email', 'Street', 'City', 'Zip', 'Size', 'PropertyType', 'IsPublic', 'IsCommercial', 'ID', 'IsValid', 'Avg_Rating'],
       error: null
     }
   },
@@ -88,7 +88,7 @@ export default {
   methods: {
     async back () {
       this.$router.push({
-        name: 'owner_overview'
+        name: 'owner_others_overview'
       })
     }
   }

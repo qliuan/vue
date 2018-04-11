@@ -22,4 +22,13 @@ module.exports = (app) => {
 
   app.post('/owner_overview',
     PropertiesController.owner_overview)
+
+  app.post('/owner_property_detail',
+    PropertiesController.owner_property_detail)
+
+  app.post('/get_property_items',
+    FarmItemController.get_property_items)
+
+  app.post('/owner_others_overview',
+    PropertiesController.owner_others_overview)
 }

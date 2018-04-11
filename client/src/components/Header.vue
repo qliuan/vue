@@ -7,12 +7,6 @@
       </v-btn>
     </v-toolbar-title>
 
-    <!-- <v-toolbar-items>
-      <v-btn flat dark>
-        About
-      </v-btn>
-    </v-toolbar-items> -->
-
     <v-spacer></v-spacer>
 
     <v-toolbar-items>
