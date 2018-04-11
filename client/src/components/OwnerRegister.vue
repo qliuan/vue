@@ -108,6 +108,9 @@
 import AuthenticationService from '@/services/AuthenticationService'
 import Panel from '@/components/global/Panel'
 import FarmItemService from '@/services/FarmItemService'
+import HasService from '@/services/HasService'
+import PropertyService from '@/services/PropertyService'
+
 // controller
 export default {
   data () {
@@ -129,7 +132,8 @@ export default {
       isPublic: true,
       isCommercial: true,
       animalOptions: [],
-      cropOptions: []
+      cropOptions: [],
+      property_id: 0
 
     }
   },
@@ -186,11 +190,90 @@ export default {
             username: this.username,
             email: this.email,
             password: this.password,
-            usertype: this.usertype
+            usertype: this.usertype,
+            property_name: this.property_name,
+            street_address: this.street_address,
+            city: this.city,
+            zip: this.zip,
+            acres: this.acres,
+            property_type: this.property_type,
+            animals: this.animals,
+            crops: this.crops,
+            isPublic: true,
+            isCommercial: true
+
           })
           console.log(response)
         } catch (error) {
           this.error = error.response.data.error
+        }
+
+        try {
+          const response = await PropertyService.insert({
+            username: this.username,
+            propertyName: this.property_name,
+            streetAddress: this.street_address,
+            city: this.city,
+            zip: this.zip,
+            acres: this.acres,
+            propertyType: this.property_type,
+            animals: this.animals,
+            crops: this.crops,
+            isPublic: true,
+            isCommercial: true
+
+          })
+          console.log('insert into property message below: ')
+          console.log(response)
+        } catch (error) {
+          console.log(error)
+          this.error = error.response.data.error
+        }
+
+        // Get Property ID back by property name
+        try {
+          const propertyID = await PropertyService.get_id_by_name({
+            // propertyName: 'Kenari Company Farm'
+            propertyName: this.property_name
+          })
+          this.property_id = propertyID.data[0].ID
+          console.log(propertyID)
+          console.log('propertyID')
+        } catch (error) {
+          this.error = error.response.data.error
+        }
+
+        // insert into Has table
+        if (this.property_type === 'FARM') {
+          try {
+            const animals = await HasService.insert({
+              propertyID: this.property_id,
+              farmitem: this.animals
+            })
+            console.log(animals)
+          } catch (error) {
+            this.error = error.response.data.error
+          }
+
+          try {
+            const crops = await HasService.insert({
+              propertyID: this.property_id,
+              farmitem: this.crops
+            })
+            console.log(crops)
+          } catch (error) {
+            this.error = error.response.data.error
+          }
+        } else {
+          try {
+            const crops = await HasService.insert({
+              propertyID: this.property_id,
+              farmitem: this.crops
+            })
+            console.log(crops)
+          } catch (error) {
+            this.error = error.response.data.error
+          }
         }
       }
     }
