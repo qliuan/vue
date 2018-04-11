@@ -46,28 +46,9 @@ export default {
           email: this.email,
           password: this.password
         })
-
         console.log(response.data)
         this.$store.dispatch('setToken', response.data.token)
         this.$store.dispatch('setUser', response.data.user)
-
-        switch (response.data.user.UserType) {
-          case 'OWNER':
-            // jump to owner_overview page
-            this.$router.push({
-              name: 'owner_overview'
-            })
-            break
-          case 'ADMIN':
-            // jump to owner_overview page
-            this.$router.push({
-              name: 'owner_overview'
-            })
-            break
-
-          default:
-            this.error = 'Error jumping to the overview page'
-        }
       } catch (error) {
         this.error = error.response.data.error
       }
@@ -78,5 +59,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
+
 </style>
