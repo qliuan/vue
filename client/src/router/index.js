@@ -6,6 +6,9 @@ import VisitorRegister from '@/components/VisitorRegister'
 import Login from '@/components/Login'
 import OwnerOverview from '@/components/overview/OwnerOverview'
 import OwnerPropertyDetail from '@/components/property_detail/OwnerPropertyDetail'
+import OwnerManageProperty from '@/components/property_detail/OwnerManageProperty'
+import OwnerOthersOverview from '@/components/overview/OwnerOthersOverview'
+import OwnerOthersPropertyDetail from '@/components/property_detail/OwnerOthersPropertyDetail'
 
 import Test from '@/components/Test'
 
@@ -44,9 +47,24 @@ export default new Router({
       component: OwnerOverview
     },
     {
-      path: '/owner_property_detail',
+      path: '/owner_property_detail/:id',
       name: 'owner_property_detail',
       component: OwnerPropertyDetail
+    },
+    {
+      path: '/owner_manage_property/:id',
+      name: 'owner_manage_property',
+      component: OwnerManageProperty
+    },
+    {
+      path: '/owner_others_overview',
+      name: 'owner_others_overview',
+      component: OwnerOthersOverview
+    },
+    {
+      path: '/owner_others_property_detail',
+      name: 'owner_others_property_detail',
+      component: OwnerOthersPropertyDetail
     }
   ]
 })

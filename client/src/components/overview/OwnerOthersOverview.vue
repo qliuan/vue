@@ -1,8 +1,7 @@
 <template>
   <v-layout column>
     <v-flex xs6 offset-xs0>
-      <h1>Welcome {{username}} !</h1>
-      <h2>Your properties:</h2>
+      <h2>All other valid properties:</h2>
       <v-text-field
         label="Search"
         v-model="search"
@@ -29,20 +28,13 @@
           <td class="text-xs-right">{{ props.item.IsPublic }}</td>
           <td class="text-xs-right">{{ props.item.IsCommercial }}</td>
           <td class="text-xs-right">{{ props.item.ID }}</td>
-          <td class="text-xs-right">{{ props.item.IsValid }}</td>
           <td class="text-xs-right">{{ props.item.Visits }}</td>
           <td class="text-xs-right">{{ props.item.Avg_Rating }}</td>
-          <td>
-            <v-btn class="cyan" dark
-              @click="edit(props.item)">
-              Edit
-            </v-btn>
-          </td>
         </template>
       </v-data-table>
       <v-btn class="cyan" dark
-        @click="viewOthers()">
-        View Other Properties
+        @click="back()">
+        Back
       </v-btn>
       <div class="error" v-html="error" />
     </v-flex>
@@ -54,7 +46,6 @@ import OverviewService from '@/services/OverviewService'
 export default {
   data () {
     return {
-      username: '',
       headers: [
         { text: 'Name', value: 'Name' },
         { text: 'Address', value: 'Street', sortable: false }, /*, align: 'left' */
@@ -65,7 +56,6 @@ export default {
         { text: 'Is Public', value: 'IsPublic', sortable: false },
         { text: 'Is Commercial', value: 'IsCommercial', sortable: false },
         { text: 'ID', value: 'ID', sortable: false },
-        { text: 'Is Valid', value: 'IsValid', sortable: false },
         { text: 'Visits', value: 'Visits' },
         { text: 'Avg. Rating', value: 'Avg_Rating' }
       ],
@@ -76,8 +66,7 @@ export default {
     }
   },
   async mounted () {
-    this.username = this.$store.state.user.Username
-    var data = (await OverviewService.owner_overview({
+    var data = (await OverviewService.owner_others_overview({
       username: this.$store.state.user.Username
     })).data
     data.forEach(function (property) { // converting the formats
@@ -106,20 +95,14 @@ export default {
   methods: {
     async detail (prop) {
       this.$router.push({
-        name: 'owner_property_detail',
-        params: { id: prop.ID }
-      })
-    },
-    async edit (prop) {
-      this.$router.push({
-        name: 'owner_manage_property',
+        name: 'owner_others_property_detail',
         params: { id: prop.ID }
       })
     },
 
-    async viewOthers () {
+    async back () {
       this.$router.push({
-        name: 'owner_others_overview'
+        name: 'owner_overview'
       })
     }
   }

@@ -5,7 +5,7 @@
       <v-layout row>
         <v-flex xs4 />
         <v-flex xs2>
-          <h3>{{title+":"}}</h3>
+          <h3>{{title}}</h3>
         </v-flex>
         <v-flex xs2>
           <h3>{{property[title]}}</h3>

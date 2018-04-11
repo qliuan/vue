@@ -24,6 +24,15 @@ module.exports = (app) => {
   app.post('/owner_overview',
     PropertiesController.owner_overview)
 
+  app.post('/owner_property_detail',
+    PropertiesController.owner_property_detail)
+
+  app.post('/get_property_items',
+    FarmItemController.get_property_items)
+
+  app.post('/owner_others_overview',
+    PropertiesController.owner_others_overview)
+
   app.post('/get_back_id_by_propname',
     PropertiesController.getid_byname)
 
@@ -32,4 +41,5 @@ module.exports = (app) => {
 
   app.post('/insert_has',
     HasController.create)
+
 }

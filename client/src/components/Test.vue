@@ -1,4 +1,26 @@
-<template>
+<!-- <template>
+  <ul id="example-1">
+    <li v-for="item in items">
+      {{ item.message }}
+    </li>
+  </ul>
+</template>
+
+<script>
+export default {
+  name: 'my-component',
+  data () {
+    return {
+      items: [
+        { message: 'Foo' },
+        { message: 'Bar' }
+      ]
+    }
+  }
+}
+</script>
+ -->
+ <template>
   <div>
     <vue-good-table
       :columns='columns'

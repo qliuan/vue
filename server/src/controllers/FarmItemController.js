@@ -25,5 +25,19 @@ module.exports = {
       console.log(result)
       res.send(result)
     })
+  },
+
+  async get_property_items (req, res) {
+    var sql = 'select Name, Type from FarmItem join Has on PropertyID = ? and ItemName = Name;'
+    var sqlPara = [req.body.id]
+    connection.query(sql, sqlPara, function (err, result) {
+      if (err) {
+        res.status(400).send({
+          error: 'Errors encountered from querying FarmItem'
+        })
+        return
+      }
+      res.send(result)
+    })
   }
 }
