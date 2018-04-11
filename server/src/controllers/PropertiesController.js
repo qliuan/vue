@@ -57,15 +57,14 @@ module.exports = {
     connection.query(sql, sqlPara, function (err, result) {
       if (err) {
         res.status(400).send({
-          error: 'Errors encountered from querying owner properties'
-          })
-          return
+          error: 'Errors encountered from querying owner properties'})
+        return
       }
       console.log(result)
       res.send(result)
     })
   },
-  
+
   async create (req, res) {
     // var sql = `INSERT INTO Property (Name, Size, IsCommercial, IsPublic, Street, City, Zip, PropertyType, Owner, ApprovedBy) VALUES (?,?,?,?,?,?,?,?,?,NULL);`
     var sqlPara = [req.body.propertyName, req.body.acres, req.body.isCommercial, req.body.isPublic, req.body.streetAddress, req.body.city, req.body.zip, req.body.propertyType, req.body.username]

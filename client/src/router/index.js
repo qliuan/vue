@@ -15,7 +15,6 @@ import OwnerOthersPropertyDetail from '@/components/property_detail/OwnerOthersP
 
 import Test from '@/components/Test'
 
-
 Vue.use(Router)
 
 export default new Router({
