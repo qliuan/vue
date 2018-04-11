@@ -8,10 +8,11 @@ import Login from '@/components/Login'
 import AdminOverview from '@/components/AdminOverview'
 
 import OwnerOverview from '@/components/overview/OwnerOverview'
-import OwnerPropertyDetail from '@/components/property_detail/OwnerPropertyDetail'
-import OwnerManageProperty from '@/components/property_detail/OwnerManageProperty'
+import OwnerPropertyDetail from '@/components/property/OwnerPropertyDetail'
+import OwnerManageProperty from '@/components/property/OwnerManageProperty'
 import OwnerOthersOverview from '@/components/overview/OwnerOthersOverview'
-import OwnerOthersPropertyDetail from '@/components/property_detail/OwnerOthersPropertyDetail'
+import OwnerOthersPropertyDetail from '@/components/property/OwnerOthersPropertyDetail'
+import OwnerAddProperty from '@/components/property/OwnerAddProperty'
 
 import Test from '@/components/Test'
 
@@ -73,6 +74,11 @@ export default new Router({
       path: '/owner_others_property_detail',
       name: 'owner_others_property_detail',
       component: OwnerOthersPropertyDetail
+    },
+    {
+      path: '/owner_add_property',
+      name: 'owner_add_property',
+      component: OwnerAddProperty
     }
   ]
 })

@@ -44,6 +44,10 @@
         @click="viewOthers()">
         View Other Properties
       </v-btn>
+      <v-btn class="cyan" dark
+        @click="addProperty()">
+        Add Property
+      </v-btn>
       <div class="error" v-html="error" />
     </v-flex>
   </v-layout>
@@ -120,6 +124,12 @@ export default {
     async viewOthers () {
       this.$router.push({
         name: 'owner_others_overview'
+      })
+    },
+
+    async addProperty () {
+      this.$router.push({
+        name: 'owner_add_property'
       })
     }
   }
