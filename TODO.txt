@@ -1,14 +1,14 @@
 /****** By user *****/
 login (done)
 owner_register (done)
-visitor_register
+visitor_register (done)
 
 // Owner
 owner_overview (done)
 owner_others_overview (done)
 owner_property_detail (done)
 owner_other_property_detail (done)
-owner_manage_property // add pending farmitem
+owner_manage_property (done)
 owner_add_property (done)
 
 // Visitor
@@ -17,9 +17,9 @@ visitor_history
 visitor_property_detail
 
 // Admin
-admin_manage_property
-admin_unconfirmed_properties
-admin_confirmed_properties
+admin_manage_property (done)
+admin_unconfirmed_properties (done)
+admin_confirmed_properties (done)
 admin_visitor_overview
 admin_owner_overview
 admin_approved_list

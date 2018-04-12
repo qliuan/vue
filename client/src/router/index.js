@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
-import OwnerRegister from '@/components/OwnerRegister'
-import VisitorRegister from '@/components/VisitorRegister'
-import Login from '@/components/Login'
+import OwnerRegister from '@/components/authentication/OwnerRegister'
+import VisitorRegister from '@/components/authentication/VisitorRegister'
+import Login from '@/components/authentication/Login'
 
-import AdminOverview from '@/components/AdminOverview'
+import AdminOverview from '@/components/overview/AdminOverview'
 
 import OwnerOverview from '@/components/overview/OwnerOverview'
 import OwnerPropertyDetail from '@/components/property/OwnerPropertyDetail'
@@ -13,6 +13,9 @@ import OwnerManageProperty from '@/components/property/OwnerManageProperty'
 import OwnerOthersOverview from '@/components/overview/OwnerOthersOverview'
 import OwnerOthersPropertyDetail from '@/components/property/OwnerOthersPropertyDetail'
 import OwnerAddProperty from '@/components/property/OwnerAddProperty'
+import ConfirmedPropertyList from '@/components/overview/ConfirmedPropertyList'
+import UnconfirmedPropertyList from '@/components/overview/UnconfirmedPropertyList'
+import AdminManageProperty from '@/components/property/AdminManageProperty'
 
 import Test from '@/components/Test'
 
@@ -46,8 +49,8 @@ export default new Router({
       component: Login
     },
     {
-      path: '/adminoverview',
-      name: 'adminoverview',
+      path: '/admin_overview',
+      name: 'admin_overview',
       component: AdminOverview
     },
     {
@@ -79,6 +82,21 @@ export default new Router({
       path: '/owner_add_property',
       name: 'owner_add_property',
       component: OwnerAddProperty
+    },
+    {
+      path: '/confirmed_property_list',
+      name: 'confirmed_property_list',
+      component: ConfirmedPropertyList
+    },
+    {
+      path: '/unconfirmed_property_list',
+      name: 'unconfirmed_property_list',
+      component: UnconfirmedPropertyList
+    },
+    {
+      path: '/admin_manage_property/:id',
+      name: 'admin_manage_property',
+      component: AdminManageProperty
     }
   ]
 })
