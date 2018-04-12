@@ -47,4 +47,7 @@ module.exports = (app) => {
 
   app.post('/delete_has',
     HasController.delete)
+
+  app.post('/get_hashed_password',
+    AuthenticationController.get_hashed_password)
 }

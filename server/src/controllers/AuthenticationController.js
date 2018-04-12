@@ -38,6 +38,7 @@ module.exports = {
       res.send(result)
     })
   },
+
   async login (req, res) {
     var sql = 'select * from User where Email = ?'
     var candidatePassword = req.body.password
@@ -71,5 +72,12 @@ module.exports = {
         }
       }
     })
+  },
+
+  async get_hashed_password (req, res) {
+    var pass = req.body.passwords
+    var hashed = await pass.map(pass => hashPassword(pass))
+
+    res.send({ raw: pass, hashed: hashed })
   }
 }
