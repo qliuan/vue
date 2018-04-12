@@ -5,8 +5,8 @@ module.exports = {
   async create (req, res) {
     var sql = `INSERT INTO Has VALUES (?, ?);`
     var sqlPara = [req.body.propertyID, req.body.farmitem]
-    // var sqlPara = []
     connection.query(sql, sqlPara, function (err, result) {
+      console.log('Insert Has', req.body.propertyID, req.body.farmitem)
       if (err) {
         res.status(400).send({
           error: 'Insert Has failed'
