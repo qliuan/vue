@@ -14,11 +14,11 @@
           View Confirmed Properties
         </v-btn>
         <v-btn color="primary"
-          @click="navigateTo({name: 'confirmedpropertylist'})">
+          @click="navigateTo({name: 'confirmed_property_list'})">
           View Confirmed Properties
         </v-btn>
         <v-btn color="primary"
-          @click="navigateTo({name: 'unconfirmedpropertylist'})">
+          @click="navigateTo({name: 'unconfirmed_property_list'})">
           View Unconfirmed Properties
         </v-btn>
         <v-btn color="primary"

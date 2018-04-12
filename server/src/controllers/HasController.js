@@ -20,7 +20,7 @@ module.exports = {
 
   async delete (req, res) {
     var sql = 'delete from Has where PropertyID=? and ItemName=?'
-    var sqlPara = [req.body.propertyID, req.body.name]
+    var sqlPara = [req.body.propertyID, req.body.farmitem]
     connection.query(sql, sqlPara, function (err, result) {
       if (err) {
         res.status(400).send({
