@@ -114,5 +114,31 @@ module.exports = {
       }
       res.send(result)
     })
+  },
+
+  async confirmed_property_list (req, res) {
+    var sql = `select Name, Street, City, Zip, Size, PropertyType, IsPublic,IsCommercial, ID, ApprovedBy, count(*) as Visits, avg(Rating) as Avg_Rating from Property left outer join Visit on PropertyID = ID where ApprovedBy!='NULL' group by ID order by Name;`
+    connection.query(sql, function (err, result) {
+      if (err) {
+        res.status(400).send({
+          error: 'Errors encountered from querying owner properties'
+        })
+        return
+      }
+      res.send(result)
+    })
+  },
+
+  async unconfirmed_property_list (req, res) {
+    var sql = `select Name, Street, City, Zip, Size, PropertyType, IsPublic, IsCommercial, ID, ApprovedBy, Owner from Property left outer join Visit on PropertyID = ID where ApprovedBy='NULL' or ApprovedBy is null group by ID order by Name`
+    connection.query(sql, function (err, result) {
+      if (err) {
+        res.status(400).send({
+          error: 'Errors encountered from querying owner properties'
+        })
+        return
+      }
+      res.send(result)
+    })
   }
 }

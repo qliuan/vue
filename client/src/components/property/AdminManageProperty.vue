@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>Manage {{title}}</h1>
+    <h1>Admin Manage {{title}}</h1>
 
     <v-layout row>
       <v-flex xs2 />
@@ -150,32 +150,6 @@
       </v-flex>
     </v-layout>
 
-    <v-layout row>
-      <v-flex xs1 />
-      <v-flex xs2>
-        <h3>Request Item Approval:</h3>
-      </v-flex>
-      <v-flex xs2>
-        <v-text-field
-          label="New Item Name"
-          v-model="itemApprovalName"
-        ></v-text-field>
-      </v-flex>
-      <v-flex xs3>
-        <span>Type</span>
-        <select v-model="itemApprovalType" class="select-style">
-          <option disabled>New Item Type</option>
-          <option v-for="type in itemTypes" :key="type">{{type}}</option>
-        </select>
-        <v-btn
-          @click='itemRequestApproval'
-          class="cyan"
-          dark>
-          Submit Request
-        </v-btn>
-      </v-flex>
-    </v-layout>
-
     <div class="error" v-html="error" />
     <v-alert v-if="comment" type="success" :value="true">
       {{comment}}
@@ -184,7 +158,7 @@
       @click='save'
       class="cyan"
       dark>
-      Save Changes
+      Save Changes (Confirm)
     </v-btn>
     <v-btn
       @click='back'
@@ -220,9 +194,6 @@ export default {
       itemDeleting: [],
       newCrop: '',
       newAnimal: '',
-      itemTypes: [ 'FRUIT', 'FLOWER', 'VEGETABLE', 'NUT', 'ANIMAL' ],
-      itemApprovalType: '',
-      itemApprovalName: '',
       error: null,
       comment: null
     }
@@ -346,29 +317,9 @@ export default {
       // console.log(this.crops, this.itemDeleting, this.validCrops)
     },
 
-    async itemRequestApproval () {
-      var type = this.itemApprovalType
-      var name = this.itemApprovalName
-      // console.log('Requesting', type, name)
-      try {
-        await FarmItemService.add_pending_item({
-          Name: name,
-          Type: type
-        })
-        this.comment = 'Adding Pending Item Succeeded'
-        setTimeout(function () {
-          this.comment = ''
-          this.itemApprovalName = ''
-          this.itemApprovalType = ''
-        }.bind(this), 2000)
-      } catch (error) {
-        this.error = error.response.data.error
-      }
-    },
-
     async back () {
       this.$router.push({
-        name: 'owner_overview'
+        name: 'admin_overview'
       })
     },
 
@@ -398,25 +349,24 @@ export default {
           })
         }
 
-        this.comment = 'Updating the Property Succeeded, Redirecting to Overview...'
+        this.comment = 'Updating the Property Succeeded'
         setTimeout(function () {
-          this.$router.push({ name: 'owner_overview' })
-        }.bind(this), 3000)
+          this.comment = null
+        }.bind(this), 5000)
       } catch (error) {
         this.error = error.response.data.error
       }
     },
 
     async deleteProperty () {
-      console.log('Delete the property')
       try {
         await PropertyService.delete_property({
           id: this.id
         })
         this.comment = 'Deleting the Porperty Succeeded'
         setTimeout(function () {
-          this.$router.push({ name: 'owner_overview' })
-        }.bind(this), 2000)
+          this.comment = null
+        }.bind(this), 5000)
       } catch (error) {
         this.error = error.response.data.error
       }

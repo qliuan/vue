@@ -1,7 +1,7 @@
 <template>
   <v-layout column>
     <v-flex xs6 offset-xs0>
-      <h2>Confirmed properties:</h2>
+      <h2>All Confirmed Properties:</h2>
       <v-text-field
         label="Search"
         v-model="search"
@@ -15,10 +15,7 @@
       >
         <template slot="items" slot-scope="props">
           <td class="text-xs-right">
-            <v-btn flat light
-              @click="detail(props.item)">
               {{ props.item.Name }}
-            </v-btn>
           </td>
           <td class="text-xs-right">{{ props.item.Street }}</td>
           <td class="text-xs-right">{{ props.item.City }}</td>
@@ -28,8 +25,7 @@
           <td class="text-xs-right">{{ props.item.IsPublic }}</td>
           <td class="text-xs-right">{{ props.item.IsCommercial }}</td>
           <td class="text-xs-right">{{ props.item.ID }}</td>
-          <td class="text-xs-right">{{ props.item.IsValid }}</td>
-          <td class="text-xs-right">{{ props.item.Visits }}</td>
+          <td class="text-xs-right">{{ props.item.ApprovedBy }}</td>
           <td class="text-xs-right">{{ props.item.Avg_Rating }}</td>
           <td>
             <v-btn class="cyan" dark
@@ -39,13 +35,10 @@
           </td>
         </template>
       </v-data-table>
+
       <v-btn class="cyan" dark
-        @click="viewOthers()">
-        View Other Properties
-      </v-btn>
-      <v-btn class="cyan" dark
-        @click="addProperty()">
-        Add Property
+        @click="back()">
+        Back
       </v-btn>
       <div class="error" v-html="error" />
     </v-flex>
@@ -61,15 +54,14 @@ export default {
       headers: [
         { text: 'Name', value: 'Name' },
         { text: 'Address', value: 'Street', sortable: false }, /*, align: 'left' */
-        { text: 'City', value: 'City' },
-        { text: 'Zip', value: 'Zip', sortable: false },
+        { text: 'City', value: 'City', sortable: false },
+        { text: 'Zip', value: 'Zip' },
         { text: 'Size', value: 'Size', sortable: false },
         { text: 'Type', value: 'PropertyType' },
         { text: 'Is Public', value: 'IsPublic', sortable: false },
         { text: 'Is Commercial', value: 'IsCommercial', sortable: false },
         { text: 'ID', value: 'ID', sortable: false },
-        { text: 'Is Valid', value: 'IsValid', sortable: false },
-        { text: 'Visits', value: 'Visits' },
+        { text: 'Approved By', value: 'ApprovedBy' },
         { text: 'Avg. Rating', value: 'Avg_Rating' }
       ],
       items: [],
@@ -80,13 +72,12 @@ export default {
   },
   async mounted () {
     this.username = this.$store.state.user.Username
-    var data = (await OverviewService.owner_overview({
+    var data = (await OverviewService.confirmed_property_list({
       username: this.$store.state.user.Username
     })).data
     data.forEach(function (property) { // converting the formats
       property.IsPublic = Boolean(Number(property.IsPublic))
       property.IsCommercial = Boolean(Number(property.IsCommercial))
-      property.IsValid = Boolean(Number(property.IsValid))
       property.ID = Number(property.ID).toLocaleString('en-US', {minimumIntegerDigits: 5, useGrouping: false})
     })
     this.items = this.data = data
@@ -107,30 +98,20 @@ export default {
     }
   },
   methods: {
-    async detail (prop) {
-      this.$router.push({
-        name: 'owner_property_detail',
-        params: { id: prop.ID }
-      })
-    },
+
     async edit (prop) {
       this.$router.push({
-        name: 'owner_manage_property',
+        name: 'admin_manage_property',
         params: { id: prop.ID }
       })
     },
 
-    async viewOthers () {
+    async back () {
       this.$router.push({
-        name: 'owner_others_overview'
-      })
-    },
-
-    async addProperty () {
-      this.$router.push({
-        name: 'owner_add_property'
+        name: 'admin_overview'
       })
     }
+
   }
 }
 </script>

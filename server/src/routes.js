@@ -59,4 +59,10 @@ module.exports = (app) => {
 
   app.post('/update_property',
     PropertiesController.update)
+
+  app.post('/confirmed_property_list',
+    PropertiesController.confirmed_property_list)
+
+  app.post('/unconfirmed_property_list',
+    PropertiesController.unconfirmed_property_list)
 }
