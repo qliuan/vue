@@ -11,5 +11,13 @@ export default {
 
   get_id_by_name (propertyName) {
     return Api().post('get_back_id_by_propname', propertyName)
+  },
+
+  delete_property (id) {
+    return Api().post('delete_property', id)
+  },
+
+  update_property (infor) {
+    return Api().post('update_property', infor)
   }
 }

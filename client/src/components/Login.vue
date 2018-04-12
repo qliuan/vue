@@ -21,7 +21,7 @@
           dark>
           Login
         </v-btn>
-
+        <div v-html="comments" />
       </panel>
     </v-flex>
   </v-layout>
@@ -36,7 +36,8 @@ export default {
     return {
       email: '',
       password: '',
-      error: null
+      error: null,
+      comments: `'farmowner','farmerJoe@gmail.com','farming123','OWNER'`
     }
   },
   methods: {
@@ -47,7 +48,7 @@ export default {
           password: this.password
         })
 
-        console.log(response.data)
+        // console.log(response.data)
         this.$store.dispatch('setToken', response.data.token)
         this.$store.dispatch('setUser', response.data.user)
 
@@ -61,7 +62,7 @@ export default {
           case 'ADMIN':
             // jump to owner_overview page
             this.$router.push({
-              name: 'owner_overview'
+              name: 'admin_overview'
             })
             break
 

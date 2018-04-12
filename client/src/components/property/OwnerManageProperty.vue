@@ -70,7 +70,7 @@
       <v-flex xs2 />
       <v-flex xs3>
         <span>Public ?</span>
-        <select v-model="property.IsPublic" style="background-color:lightblue">
+        <select v-model="property.IsPublic" class="select-style">
           <option disabled value={property.IsPublic}>Please select one</option>
           <option>true</option>
           <option>false</option>
@@ -79,7 +79,7 @@
       <v-flex xs2 />
       <v-flex xs3>
         <span>Commercial ?</span>
-        <select v-model="property.IsCommercial" style="background-color:lightblue">
+        <select v-model="property.IsCommercial" class="select-style">
           <option disabled value={property.IsCommercial}>Please select one</option>
           <option>true</option>
           <option>false</option>
@@ -92,7 +92,7 @@
         <h3>Crops:</h3>
       </v-flex>
       <div v-for="crop in crops" :key="crop.Name">
-        <v-flex xs3>
+        <v-flex xs4>
           <td>
             <h3>{{crop.Name}}</h3>
           </td>
@@ -102,6 +102,7 @@
         </v-flex>
       </div>
     </v-layout>
+
     <v-layout row v-if="animals.length">
       <v-flex xs2>
         <h3>Animals:</h3>
@@ -122,8 +123,8 @@
       <v-flex xs1 />
       <v-flex xs3>
         <span>Add New Crop</span>
-        <select v-model="newCrop" style="background-color:lightblue">
-          <option disabled>Please select one</option>
+        <select v-model="newCrop" class="select-style">
+          <option selected disabled>Please select one</option>
           <option v-for="crop in validCrops" :key="crop.Name">{{crop.Name}}</option>
         </select>
         <v-btn
@@ -136,8 +137,8 @@
       <v-flex xs1 />
       <v-flex xs5 v-if="animals.length">
         <span>Add New Animal</span>
-        <select v-model="newAnimal" style="background-color:lightblue">
-          <option disabled>Please select one</option>
+        <select v-model="newAnimal" class="select-style">
+          <option selected disabled>Please select one</option>
           <option v-for="animal in validAnimals" :key="animal.Name">{{animal.Name}}</option>
         </select>
         <v-btn
@@ -147,24 +148,38 @@
           Add Animal
         </v-btn>
       </v-flex>
-      <!-- <v-flex xs1 />
-      <v-flex xs3 v-if="animals.length">
-        <span>Add New Animal</span>
-        <select v-model="newAnimal" style="background-color:lightblue">
-          <option disabled>Please select one</option>
-          <option v-for="animal in validAnimals" :key="animal.Name">{{animal.Name}}</option>
+    </v-layout>
+
+    <v-layout row>
+      <v-flex xs1 />
+      <v-flex xs2>
+        <h3>Request Item Approval:</h3>
+      </v-flex>
+      <v-flex xs2>
+        <v-text-field
+          label="New Item Name"
+          v-model="itemApprovalName"
+        ></v-text-field>
+      </v-flex>
+      <v-flex xs3>
+        <span>Type</span>
+        <select v-model="itemApprovalType" class="select-style">
+          <option disabled>New Item Type</option>
+          <option v-for="type in itemTypes" :key="type">{{type}}</option>
         </select>
         <v-btn
-          @click='addAnimal'
+          @click='itemRequestApproval'
           class="cyan"
           dark>
-          Add Animal
+          Submit Request
         </v-btn>
-      </v-flex> -->
+      </v-flex>
     </v-layout>
 
     <div class="error" v-html="error" />
-    <div v-html="comment" />
+    <v-alert v-if="comment" type="success" :value="true">
+      {{comment}}
+    </v-alert>
     <v-btn
       @click='save'
       class="cyan"
@@ -179,7 +194,7 @@
     </v-btn>
     <v-btn
       @click='deleteProperty'
-      class="cyan"
+      class="red"
       dark>
       Delete the Property
     </v-btn>
@@ -189,7 +204,7 @@
 <script>
 import PropertyService from '@/services/PropertyService'
 import FarmItemService from '@/services/FarmItemService'
-// import HasService from '@/services/HasService'
+import HasService from '@/services/HasService'
 
 export default {
   data () {
@@ -204,6 +219,9 @@ export default {
       itemDeleting: [],
       newCrop: '',
       newAnimal: '',
+      itemTypes: [ 'FRUIT', 'FLOWER', 'VEGETABLE', 'NUT', 'ANIMAL' ],
+      itemApprovalType: '',
+      itemApprovalName: '',
       error: null,
       comment: null
     }
@@ -263,6 +281,9 @@ export default {
       if (type === 'ANIMAL') {
         if (this.animals.length === 1) {
           this.error = 'Fail to delete the last animal'
+          setTimeout(function () {
+            this.error = null
+          }.bind(this), 2000)
           return
         }
         // remove the item from this.animals
@@ -272,6 +293,9 @@ export default {
       } else {
         if (this.crops.length === 1) {
           this.error = 'Fail to delete the last crop'
+          setTimeout(function () {
+            this.error = null
+          }.bind(this), 2000)
           return
         }
         // remove the item from this.animals
@@ -321,6 +345,26 @@ export default {
       // console.log(this.crops, this.itemDeleting, this.validCrops)
     },
 
+    async itemRequestApproval () {
+      var type = this.itemApprovalType
+      var name = this.itemApprovalName
+      // console.log('Requesting', type, name)
+      try {
+        await FarmItemService.add_pending_item({
+          Name: name,
+          Type: type
+        })
+        this.comment = 'Adding Pending Item Succeeded'
+        setTimeout(function () {
+          this.comment = ''
+          this.itemApprovalName = ''
+          this.itemApprovalType = ''
+        }.bind(this), 2000)
+      } catch (error) {
+        this.error = error.response.data.error
+      }
+    },
+
     async back () {
       this.$router.push({
         name: 'owner_overview'
@@ -328,18 +372,78 @@ export default {
     },
 
     async save () {
-      console.log('Save the changes')
-      console.log(this.property)
-      // console.log(this.crops, this.animals)
-      // console.log(this.validCrops, this.validAnimals)
+      // Update the property
+      try {
+        await PropertyService.update_property({
+          property: this.property,
+          user: this.$store.state.user
+        })
+
+        // Adding Has relations
+        for (let item of this.itemAdding) {
+          // console.log('Adding', item.Name, 'to', this.property.ID)
+          await HasService.insert({
+            propertyID: this.property.ID,
+            farmitem: item.Name
+          })
+        }
+
+        // Deleting Has relations
+        for (let item of this.itemDeleting) {
+          // console.log('Deleting', item.Name, 'from', this.property.ID)
+          await HasService.delete({
+            propertyID: this.$route.params.id,
+            farmitem: item.Name
+          })
+        }
+
+        this.comment = 'Updating the Property Succeeded, Redirecting to Overview...'
+        setTimeout(function () {
+          this.$router.push({ name: 'owner_overview' })
+        }.bind(this), 3000)
+      } catch (error) {
+        this.error = error.response.data.error
+      }
     },
 
     async deleteProperty () {
       console.log('Delete the property')
+      try {
+        await PropertyService.delete_property({
+          id: this.id
+        })
+        this.comment = 'Deleting the Porperty Succeeded'
+        setTimeout(function () {
+          this.$router.push({ name: 'owner_overview' })
+        }.bind(this), 2000)
+      } catch (error) {
+        this.error = error.response.data.error
+      }
     }
   }
 }
 </script>
 
 <style scoped>
+.select-style {
+    border: 1px solid #ccc;
+    width: 120px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: #fafafa no-repeat 90% 50%;
+}
+
+.select-style select {
+    padding: 5px 8px;
+    width: 130%;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+}
+
+.select-style select:focus {
+    outline: none;
+}
 </style>

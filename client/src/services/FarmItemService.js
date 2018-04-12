@@ -9,5 +9,8 @@ export default {
   },
   get_other_valid_items (propertyID) {
     return Api().post('get_other_valid_items', propertyID)
+  },
+  add_pending_item (infor) {
+    return Api().post('add_pending_item', infor)
   }
 }

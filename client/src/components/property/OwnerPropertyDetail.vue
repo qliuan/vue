@@ -17,7 +17,7 @@
         <h3>Crops:</h3>
       </v-flex>
       <div v-for="crop in crops" :key="crop.Name">
-        <v-flex xs2>
+        <v-flex xs3>
           <h3>{{crop.Name + ","}}</h3>
         </v-flex>
       </div>
@@ -28,7 +28,7 @@
           <h3>Animals:</h3>
         </v-flex>
         <div v-for="animal in animals" :key="animal.Name">
-          <v-flex xs2>
+          <v-flex xs3>
             <h3>{{animal.Name + ","}}</h3>
           </v-flex>
         </div>
