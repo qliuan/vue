@@ -225,6 +225,7 @@ export default {
           })
           console.log('insert into property message below: ')
           console.log(response)
+          this.$router.push('login')
         } catch (error) {
           console.log(error)
           this.error = error.response.data.error

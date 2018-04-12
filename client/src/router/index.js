@@ -5,7 +5,13 @@ import OwnerRegister from '@/components/OwnerRegister'
 import VisitorRegister from '@/components/VisitorRegister'
 import Login from '@/components/Login'
 
-import AdminOverview from '@/components/AdminOverview'
+import AdminOverview from '@/components/overview/AdminOverview'
+import VisitorList from '@/components/VisitorList'
+import OwnerList from '@/components/OwnerList'
+import UnconfirmedProperty from '@/components/UnconfirmedProperty'
+import ConfirmedProperty from '@/components/ConfirmedProperty'
+import ApprovedItem from '@/components/ApprovedItem'
+import PendingItem from '@/components/PendingItem'
 
 import OwnerOverview from '@/components/overview/OwnerOverview'
 import OwnerPropertyDetail from '@/components/property_detail/OwnerPropertyDetail'
@@ -73,6 +79,36 @@ export default new Router({
       path: '/owner_others_property_detail',
       name: 'owner_others_property_detail',
       component: OwnerOthersPropertyDetail
+    },
+    {
+      path: '/visitorlist',
+      name: 'visitorlist',
+      component: VisitorList
+    },
+    {
+      path: '/ownerlist',
+      name: 'ownerlist',
+      component: OwnerList
+    },
+    {
+      path: '/unconfirmedproperty',
+      name: 'unconfirmedproperty',
+      component: UnconfirmedProperty
+    },
+    {
+      path: '/confirmedproperty',
+      name: 'confirmedproperty',
+      component: ConfirmedProperty
+    },
+    {
+      path: '/approveditem',
+      name: 'approveditem',
+      component: ApprovedItem
+    },
+    {
+      path: '/pendingitem',
+      name: 'pendingitem',
+      component: PendingItem
     }
   ]
 })

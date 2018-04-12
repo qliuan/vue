@@ -20,7 +20,12 @@ module.exports = {
   },
 
   async owner_property_detail (req, res) {
-    var sql = `select Name, Owner, Email, Street, City, Zip, Size, PropertyType, IsPublic,IsCommercial, ID, (ApprovedBy is not null) as IsValid, count(*) as Visits, avg(Rating) as Avg_Rating from (Property left outer join Visit on PropertyID = ID) left outer join User on Property.Owner = User.Username where ID = ? group by ID order by Name;`
+    var sql = `select Name, Owner, Email, Street, City, Zip, Size, PropertyType, 
+              IsPublic,IsCommercial, ID, (ApprovedBy is not null) as IsValid, 
+              count(*) as Visits, avg(Rating) as Avg_Rating from (Property left 
+              outer join Visit on PropertyID = ID) left outer join User 
+              on Property.Owner = User.Username where ID = ? group by ID order 
+              by Name;`
     var sqlPara = [req.body.id]
     connection.query(sql, sqlPara, function (err, result) {
       if (err) {
@@ -55,6 +60,37 @@ module.exports = {
     // var sqlPara = [req.body.username]
     var sqlPara = ['farmowner']
     connection.query(sql, sqlPara, function (err, result) {
+      if (err) {
+        res.status(400).send({
+          error: 'Errors encountered from querying owner properties'})
+        return
+      }
+      console.log(result)
+      res.send(result)
+    })
+  },
+
+  async admin_unconfirmed_overview (req, res) {
+    var sql = `select Name, Street, City, Zip, Size, PropertyType, 
+              IsPublic, IsCommercial, ID, Owner from Property where 
+              ApprovedBy is NULL order by Name;`
+    connection.query(sql, function (err, result) {
+      if (err) {
+        res.status(400).send({
+          error: 'Errors encountered from querying owner properties'})
+        return
+      }
+      console.log(result)
+      res.send(result)
+    })
+  },
+
+  async admin_confirmed_overview (req, res) {
+    var sql = `select Name, Street, City, Zip, Size, PropertyType, IsPublic,
+              IsCommercial, ID, ApprovedBy, avg(Rating) as Avg_Rating 
+              from Property left outer join Visit on PropertyID = ID 
+              where ApprovedBy is not NULL group by ID order by Name;`
+    connection.query(sql, function (err, result) {
       if (err) {
         res.status(400).send({
           error: 'Errors encountered from querying owner properties'})

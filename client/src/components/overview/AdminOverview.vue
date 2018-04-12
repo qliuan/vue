@@ -11,14 +11,14 @@
       <div>
         <v-btn color="primary"
           @click="navigateTo({name: 'ownerlist'})">
+          View Owners List
+        </v-btn>
+        <v-btn color="primary"
+          @click="navigateTo({name: 'confirmedproperty'})">
           View Confirmed Properties
         </v-btn>
         <v-btn color="primary"
-          @click="navigateTo({name: 'confirmedpropertylist'})">
-          View Confirmed Properties
-        </v-btn>
-        <v-btn color="primary"
-          @click="navigateTo({name: 'unconfirmedpropertylist'})">
+          @click="navigateTo({name: 'unconfirmedproperty'})">
           View Unconfirmed Properties
         </v-btn>
         <v-btn color="primary"

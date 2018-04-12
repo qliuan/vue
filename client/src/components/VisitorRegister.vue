@@ -80,6 +80,7 @@ export default {
             usertype: this.usertype
           })
           console.log(response)
+          this.$router.push('login')
         } catch (error) {
           this.error = error.response.data.error
         }

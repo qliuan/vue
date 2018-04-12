@@ -3,6 +3,7 @@ const AuthenticationControllerPolicy = require('./policies/AuthenticationControl
 const PropertiesController = require('./controllers/PropertiesController')
 const FarmItemController = require('./controllers/FarmItemController')
 const HasController = require('./controllers/HasController')
+const UserController = require('./controllers/UserController')
 
 module.exports = (app) => {
   app.get('/status', (req, res) => {
@@ -42,4 +43,33 @@ module.exports = (app) => {
   app.post('/insert_has',
     HasController.create)
 
+  app.post('/get_visitors',
+    UserController.get_visitors)
+  
+  app.post('/get_owners',
+    UserController.get_owners)
+
+  app.post('/delete_account',
+    UserController.delete_account)
+
+  app.post('/delete_log',
+    UserController.delete_log)
+  
+  app.post('/admin_unconfirmed_overview',
+    PropertiesController.admin_unconfirmed_overview)
+  
+  app.post('/admin_confirmed_overview',
+    PropertiesController.admin_confirmed_overview)
+
+  app.post('/get_pending_items',
+    FarmItemController.get_pending_items)
+  
+  app.post('/get_approved_items',
+    FarmItemController.get_approved_items)
+
+  app.post('/approve_item',
+    FarmItemController.approve_item)
+  
+  app.post('/delete_item',
+    FarmItemController.delete_item)
 }
