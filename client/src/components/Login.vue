@@ -61,7 +61,7 @@ export default {
           case 'ADMIN':
             // jump to owner_overview page
             this.$router.push({
-              name: 'admin_overview'
+              name: 'owner_overview'
             })
             break
 
