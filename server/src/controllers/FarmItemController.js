@@ -39,5 +39,35 @@ module.exports = {
       }
       res.send(result)
     })
+  },
+
+  async get_other_valid_items (req, res) {
+    var sql = 'select Name, Type from FarmItem where IsApproved and Name not in (select Name from FarmItem join Has on PropertyID = ? and ItemName = Name)'
+    var sqlPara = [req.body.id]
+    connection.query(sql, sqlPara, function (err, result) {
+      if (err) {
+        res.status(400).send({
+          error: 'Errors encountered from querying FarmItem'
+        })
+        return
+      }
+      res.send(result)
+    })
+  },
+
+  async add_pending_item (req, res) {
+    var sql = 'insert into FarmItem values (?, False, ?)'
+    var sqlPara = [req.body.Name, req.body.Type]
+    connection.query(sql, sqlPara, function (err, result) {
+      if (err) {
+        res.status(400).send({
+          error: 'Errors encountered from adding pending FarmItem'
+        })
+        return
+      }
+      res.send({
+        message: 'Adding pending item is succeessful'
+      })
+    })
   }
 }

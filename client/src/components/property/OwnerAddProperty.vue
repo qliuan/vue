@@ -111,13 +111,11 @@ export default {
       animalOptions: [],
       cropOptions: [],
       property_id: 0
-
     }
   },
   // v-model is for 2-way binding
   watch: {
     async property_type (value) {
-      console.log('property_type', value)
       if (value === 'FARM') {
         try {
           const animals = await FarmItemService.FarmItem_register({
@@ -136,7 +134,6 @@ export default {
             isAnimal: false
           })
           this.cropOptions = crops.data
-          console.log(crops)
         } catch (error) {
           this.error = error.response.data.error
         }
@@ -148,7 +145,6 @@ export default {
           })
           this.cropOptions = crops.data
           this.animalOptions = []
-          console.log(crops)
         } catch (error) {
           this.error = error.response.data.error
         }
@@ -157,7 +153,7 @@ export default {
   },
   methods: {
     async create () {
-      console.log('Debugging', this.$store.state.user.Username, this.property_name, this.street_address, this.city, this.zip, this.acres, this.property_type, this.animals, this.crops, this.isPublic, this.isCommercial)
+      // console.log('Debugging', this.$store.state.user.Username, this.property_name, this.street_address, this.city, this.zip, this.acres, this.property_type, this.animals, this.crops, this.isPublic, this.isCommercial)
       try {
         const response = await PropertyService.insert({
           username: this.$store.state.user.Username,
@@ -172,10 +168,9 @@ export default {
           isPublic: true,
           isCommercial: true
         })
-        console.log('insert into property message below: ')
         console.log(response)
       } catch (error) {
-        console.log(error)
+        // console.log(error)
         this.error = error.response.data.error
       }
 
@@ -186,8 +181,7 @@ export default {
           propertyName: this.property_name
         })
         this.property_id = propertyID.data[0].ID
-        console.log(propertyID)
-        console.log('propertyID')
+        // console.log(propertyID)
       } catch (error) {
         this.error = error.response.data.error
       }
@@ -213,8 +207,9 @@ export default {
           this.error = error.response.data.error
         }
       }
-
-      console.log('\n\nCreation Ends Here\n\n', this.error)
+      // console.log('\n\nCreation Ends Here\n\n', this.error)
+      this.error = 'Creation Succeeded'
+      setTimeout(function () { this.$router.push({ name: 'owner_overview' }) }.bind(this), 2000)
     }
   },
   components: {

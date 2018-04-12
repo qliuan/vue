@@ -42,4 +42,21 @@ module.exports = (app) => {
   app.post('/insert_has',
     HasController.create)
 
+  app.post('/get_other_valid_items',
+    FarmItemController.get_other_valid_items)
+
+  app.post('/delete_has',
+    HasController.delete)
+
+  app.post('/get_hashed_password',
+    AuthenticationController.get_hashed_password)
+
+  app.post('/add_pending_item',
+    FarmItemController.add_pending_item)
+
+  app.post('/delete_property',
+    PropertiesController.delete)
+
+  app.post('/update_property',
+    PropertiesController.update)
 }

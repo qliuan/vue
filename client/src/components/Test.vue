@@ -78,6 +78,11 @@ export default {
         { id: 8, name: 'Susan', age: 16, createdAt: '2013-10-31', score: 0.03343 }
       ]
     }
+  },
+
+  async mounted () {
+    // setTimeout('this.$router.push({ name: 'login' })', 2000)
+    setTimeout(function () { this.$router.push({ name: 'login' }) }.bind(this), 2000)
   }
 }
 </script>
