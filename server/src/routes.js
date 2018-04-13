@@ -3,6 +3,7 @@ const AuthenticationControllerPolicy = require('./policies/AuthenticationControl
 const PropertiesController = require('./controllers/PropertiesController')
 const FarmItemController = require('./controllers/FarmItemController')
 const HasController = require('./controllers/HasController')
+const VisitController = require('./controllers/VisitController')
 
 module.exports = (app) => {
   app.get('/status', (req, res) => {
@@ -65,4 +66,19 @@ module.exports = (app) => {
 
   app.post('/unconfirmed_property_list',
     PropertiesController.unconfirmed_property_list)
+
+  app.post('/visitor_overview',
+    PropertiesController.visitor_overview)
+
+  app.post('/log',
+    VisitController.create)
+
+  app.post('/unlog',
+    VisitController.delete)
+
+  app.post('/checkexist',
+    VisitController.checkexist)
+
+  app.post('/visit_history',
+    VisitController.visit_history)
 }
