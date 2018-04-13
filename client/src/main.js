@@ -11,11 +11,15 @@ import store from '@/store/store'
 import VueGoodTable from 'vue-good-table'
 // import the styles
 import 'vue-good-table/dist/vue-good-table.css'
+import Datetime from 'vue-datetime'
+import 'vue-datetime/dist/vue-datetime.css'
 
 Vue.config.productionTip = false
 
 Vue.use(Vuetify)
 Vue.use(VueGoodTable)
+Vue.use(Datetime)
+Vue.use(require('vue-moment'))
 
 sync(store, router)
 

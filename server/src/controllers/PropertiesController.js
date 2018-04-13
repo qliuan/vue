@@ -137,5 +137,17 @@ module.exports = {
       }
       res.send(result)
     })
+  },
+  async visitor_overview (req, res) {
+    var sql = `select Name, Street, City, Zip, Size, PropertyType, IsPublic,IsCommercial, ID, (ApprovedBy is not null) as IsValid, count(*) as Visits, avg(Rating) as Avg_Rating from Property left outer join Visit on PropertyID = ID where IsPublic = TRUE and ApprovedBy is not NULL group by ID order by Name;`
+    connection.query(sql, function (err, result) {
+      if (err) {
+        res.status(400).send({
+          error: 'Errors encountered from querying owner properties'
+        })
+        return
+      }
+      res.send(result)
+    })
   }
 }

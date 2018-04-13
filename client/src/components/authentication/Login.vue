@@ -65,7 +65,12 @@ export default {
               name: 'admin_overview'
             })
             break
-
+          case 'VISITOR':
+            // jump to owner_overview page
+            this.$router.push({
+              name: 'visitor_overview'
+            })
+            break
           default:
             this.error = 'Error jumping to the overview page'
         }
