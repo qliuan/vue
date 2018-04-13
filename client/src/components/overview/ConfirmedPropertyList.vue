@@ -2,10 +2,31 @@
   <v-layout column>
     <v-flex xs6 offset-xs0>
       <h2>All Confirmed Properties:</h2>
-      <v-text-field
-        label="Search"
-        v-model="search"
-      ></v-text-field>
+
+      <v-layout row>
+        <v-flex xs1 />
+        <v-flex xs2>
+          <h3>Search By</h3>
+          <select v-model="filterKey" class="select-style">
+            <option selected disabled>Please select one</option>
+            <option v-for="key in keys" :key="key">{{key}}</option>
+          </select>
+        </v-flex>
+        <v-flex xs1>
+          <v-text-field
+              label="Search"
+              v-model="filter"
+            ></v-text-field>
+        </v-flex>
+        <v-flex xs1>
+          <v-btn
+            @click='search'
+            class="cyan"
+            dark>
+            Search
+          </v-btn>
+        </v-flex>
+      </v-layout>
 
       <v-data-table
         :headers="headers"
@@ -53,20 +74,25 @@ export default {
       username: '',
       headers: [
         { text: 'Name', value: 'Name' },
-        { text: 'Address', value: 'Street', sortable: false }, /*, align: 'left' */
+        { text: 'Street', value: 'Street', sortable: false }, /*, align: 'left' */
         { text: 'City', value: 'City', sortable: false },
         { text: 'Zip', value: 'Zip' },
         { text: 'Size', value: 'Size', sortable: false },
-        { text: 'Type', value: 'PropertyType' },
-        { text: 'Is Public', value: 'IsPublic', sortable: false },
-        { text: 'Is Commercial', value: 'IsCommercial', sortable: false },
+        { text: 'PropertyType', value: 'PropertyType' },
+        { text: 'IsPublic', value: 'IsPublic', sortable: false },
+        { text: 'IsCommercial', value: 'IsCommercial', sortable: false },
         { text: 'ID', value: 'ID', sortable: false },
-        { text: 'Approved By', value: 'ApprovedBy' },
-        { text: 'Avg. Rating', value: 'Avg_Rating' }
+        { text: 'ApprovedBy', value: 'ApprovedBy' },
+        { text: 'Avg_Rating', value: 'Avg_Rating' }
       ],
       items: [],
       data: [],
-      search: '',
+      filter: '',
+      filterKey: '',
+      keys: [
+        'Name', 'Street', 'City', 'Zip', 'Size', 'PropertyType',
+        'IsPublic', 'IsCommercial', 'ID', 'ApprovedBy', 'Avg_Rating'
+      ],
       error: null
     }
   },
@@ -82,21 +108,7 @@ export default {
     })
     this.items = this.data = data
   },
-  watch: {
-    search (filter) {
-      // filter the data
-      this.items = this.data.filter( // for all objects
-        function (obj) { // for all keys
-          return Object.keys(obj).some(function (key) {
-            try {
-              return obj[key].toString().toLowerCase().indexOf(filter) > -1
-            } catch (err) {
-              return false
-            }
-          })
-        })
-    }
-  },
+
   methods: {
 
     async edit (prop) {
@@ -110,6 +122,34 @@ export default {
       this.$router.push({
         name: 'admin_overview'
       })
+    },
+
+    async search () {
+      var key = this.filterKey
+      var filter = this.filter
+      if (filter === '') {
+        this.items = this.data
+        return
+      }
+      if (key === '') {
+        // filter the data
+        this.items = this.data.filter( // for all objects
+          function (obj) { // for all keys
+            return Object.keys(obj).some(function (key) {
+              try {
+                return obj[key].toString().toLowerCase().indexOf(filter.toLowerCase()) > -1
+              } catch (err) {
+                return false
+              }
+            })
+          })
+      } else {
+        // filter the data
+        this.items = this.data.filter( // for all objects
+          function (obj) { // for all keys
+            return obj[key].toString().toLowerCase().indexOf(filter.toLowerCase()) > -1
+          })
+      }
     }
 
   }
