@@ -69,5 +69,59 @@ module.exports = {
         message: 'Adding pending item is succeessful'
       })
     })
+  },
+
+  async get_pending_items (req, res) {
+    var sql = `select Name, Type from FarmItem where IsApproved is false;`
+    connection.query(sql, function (err, result) {
+      if (err) {
+        res.status(400).send({
+          error: 'Errors encountered from querying FarmItem'
+        })
+        return
+      }
+      res.send(result)
+    })
+  },
+
+  async get_approved_items (req, res) {
+    var sql = `select Name, Type from FarmItem where IsApproved is true;`
+    connection.query(sql, function (err, result) {
+      if (err) {
+        res.status(400).send({
+          error: 'Errors encountered from querying FarmItem'
+        })
+        return
+      }
+      res.send(result)
+    })
+  },
+
+  async approve_item (req, res) {
+    var sql = 'update FarmItem set IsApproved = true where Name = ?;'
+    var sqlPara = [req.body.name]
+    connection.query(sql, sqlPara, function (err, result) {
+      if (err) {
+        res.status(400).send({
+          error: 'Errors encountered from querying FarmItem'
+        })
+        return
+      }
+      res.send(result)
+    })
+  },
+
+  async delete_item (req, res) {
+    var sql = 'delete from FarmItem where Name = ?;'
+    var sqlPara = [req.body.name]
+    connection.query(sql, sqlPara, function (err, result) {
+      if (err) {
+        res.status(400).send({
+          error: 'Errors encountered from querying FarmItem'
+        })
+        return
+      }
+      res.send(result)
+    })
   }
 }

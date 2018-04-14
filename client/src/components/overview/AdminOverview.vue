@@ -11,7 +11,7 @@
       <div>
         <v-btn color="primary"
           @click="navigateTo({name: 'ownerlist'})">
-          View Confirmed Properties
+          View Owner List
         </v-btn>
         <v-btn color="primary"
           @click="navigateTo({name: 'confirmed_property_list'})">
