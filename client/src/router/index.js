@@ -16,6 +16,10 @@ import OwnerAddProperty from '@/components/property/OwnerAddProperty'
 import ConfirmedPropertyList from '@/components/overview/ConfirmedPropertyList'
 import UnconfirmedPropertyList from '@/components/overview/UnconfirmedPropertyList'
 import AdminManageProperty from '@/components/property/AdminManageProperty'
+import VisitorList from '@/components/VisitorList'
+import OwnerList from '@/components/OwnerList'
+import ApprovedItem from '@/components/ApprovedItem'
+import PendingItem from '@/components/PendingItem'
 
 import Test from '@/components/Test'
 
@@ -97,6 +101,26 @@ export default new Router({
       path: '/admin_manage_property/:id',
       name: 'admin_manage_property',
       component: AdminManageProperty
+    },
+    {
+      path: '/visitorlist',
+      name: 'visitorlist',
+      component: VisitorList
+    },
+    {
+      path: '/ownerlist',
+      name: 'ownerlist',
+      component: OwnerList
+    },
+    {
+      path: '/approveditem',
+      name: 'approveditem',
+      component: ApprovedItem
+    },
+    {
+      path: '/pendingitem',
+      name: 'pendingitem',
+      component: PendingItem
     }
   ]
 })
