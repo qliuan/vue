@@ -22,7 +22,7 @@ module.exports = {
   async owner_property_detail (req, res) {
     var sql = `select Name, Owner, Email, Street, City, Zip, Size, PropertyType, 
               IsPublic,IsCommercial, ID, (ApprovedBy is not null) as IsValid, 
-              count(*) as Visits, avg(Rating) as Avg_Rating from (Property left 
+              sum(!isnull(VisitDate)) as Visits, avg(Rating) as Avg_Rating from (Property left 
               outer join Visit on PropertyID = ID) left outer join User 
               on Property.Owner = User.Username where ID = ? group by ID order 
               by Name;`
@@ -56,7 +56,11 @@ module.exports = {
   },
 
   async owner_others_overview (req, res) {
-    var sql = `select Name, Street, City, Zip, Size, PropertyType, IsPublic,IsCommercial, ID, (ApprovedBy is not null) as IsValid, count(*) as Visits, avg(Rating) as Avg_Rating from Property left outer join Visit on PropertyID = ID where Owner != ? and ApprovedBy is not null group by ID order by Name;`
+    var sql = `select Name, Street, City, Zip, Size, PropertyType, IsPublic,
+              IsCommercial, ID, (ApprovedBy is not null) as IsValid, sum(!isnull(Visitdate)) 
+              as Visits, avg(Rating) as Avg_Rating from Property left outer join 
+              Visit on PropertyID = ID where Owner != ? and ApprovedBy is not 
+              null group by ID order by Name;`
     // var sqlPara = [req.body.username]
     var sqlPara = ['farmowner']
     connection.query(sql, sqlPara, function (err, result) {

@@ -82,6 +82,15 @@ export default {
         console.log(error)
         this.error = error.response.data.error
       }
+      try {
+        const response2 = await AdminService.update_has({
+          name: prop.Name
+        })
+        console.log(response2)
+      } catch (error) {
+        console.log(error)
+        this.error = error.response.data.error
+      }
     },
 
     async back () {

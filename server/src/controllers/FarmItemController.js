@@ -93,5 +93,19 @@ module.exports = {
       }
       res.send(result)
     })
+  },
+
+  async update_has (req, res) {
+    var sql = 'delete from Has where ItemName = ?;'
+    var sqlPara = [req.body.name]
+    connection.query(sql, sqlPara, function (err, result) {
+      if (err) {
+        res.status(400).send({
+          error: 'Errors encountered from querying Has'
+        })
+        return
+      }
+      res.send(result)
+    })
   }
 }

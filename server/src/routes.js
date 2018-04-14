@@ -72,4 +72,7 @@ module.exports = (app) => {
   
   app.post('/delete_item',
     FarmItemController.delete_item)
+
+  app.post('/update_has',
+    FarmItemController.update_has)
 }
