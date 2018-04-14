@@ -22,6 +22,10 @@ import ApprovedItem from '@/components/ApprovedItem'
 import PendingItem from '@/components/PendingItem'
 
 import Test from '@/components/Test'
+import VisitorOverview from '@/components/overview/VisitorOverview'
+import VisitorPropertyDetail from '@/components/property/VisitorPropertyDetail'
+import VisitorVisitedPropertyDetail from '@/components/property/VisitorVisitedPropertyDetail'
+import ViewVisitHistory from '@/components/overview/ViewVisitHistory'
 
 Vue.use(Router)
 
@@ -121,6 +125,26 @@ export default new Router({
       path: '/pendingitem',
       name: 'pendingitem',
       component: PendingItem
+    },
+    {
+      path: '/visitor_overview',
+      name: 'visitor_overview',
+      component: VisitorOverview
+    },
+    {
+      path: '/visitor_property_detail',
+      name: 'visitor_property_detail',
+      component: VisitorPropertyDetail
+    },
+    {
+      path: '/visitor_property_detail',
+      name: 'visitor_visitedproperty_detail',
+      component: VisitorVisitedPropertyDetail
+    },
+    {
+      path: '/view_visit_history',
+      name: 'view_visit_history',
+      component: ViewVisitHistory
     }
   ]
 })

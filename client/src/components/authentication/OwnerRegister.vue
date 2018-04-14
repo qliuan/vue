@@ -276,6 +276,7 @@ export default {
             this.error = error.response.data.error
           }
         }
+        this.$router.push({name: 'login'})
       }
     }
   },

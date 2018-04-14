@@ -12,5 +12,8 @@ export default {
   },
   unconfirmed_property_list (admin) {
     return Api().post('unconfirmed_property_list', admin)
+  },
+  visitor_overview () {
+    return Api().post('visitor_overview')
   }
 }
