@@ -4,6 +4,7 @@ const PropertiesController = require('./controllers/PropertiesController')
 const FarmItemController = require('./controllers/FarmItemController')
 const HasController = require('./controllers/HasController')
 const VisitController = require('./controllers/VisitController')
+const UserController = require('./controllers/UserController')
 
 module.exports = (app) => {
   app.get('/status', (req, res) => {
@@ -81,4 +82,31 @@ module.exports = (app) => {
 
   app.post('/visit_history',
     VisitController.visit_history)
+  
+  app.post('/get_visitors',
+    UserController.get_visitors)
+  
+  app.post('/get_owners',
+    UserController.get_owners)
+  
+  app.post('/delete_account',
+    UserController.delete_account)
+
+  app.post('/delete_log',
+    UserController.delete_log)
+
+  app.post('/get_pending_items',
+    FarmItemController.get_pending_items)
+
+  app.post('/get_approved_items',
+    FarmItemController.get_approved_items)
+  
+  app.post('/approve_item',
+    FarmItemController.approve_item)
+  
+  app.post('/delete_item',
+    FarmItemController.delete_item)
+
+  app.post('/admin_add_item', 
+    FarmItemController.admin_add_item)
 }

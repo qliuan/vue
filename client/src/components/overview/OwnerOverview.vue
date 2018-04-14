@@ -32,7 +32,7 @@
       <v-data-table
         :headers="headers"
         :items="items"
-        hide-actions
+        page-text
         class="elevation-1"
       >
         <template slot="items" slot-scope="props">

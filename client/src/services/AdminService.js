@@ -18,7 +18,7 @@ export default {
   },
 
   admin_confirmed_overview () {
-    return Api().post('admin_confirmed_overvie')
+    return Api().post('admin_confirmed_overview')
   },
 
   admin_manage_property (id, admin) {
@@ -43,5 +43,9 @@ export default {
 
   approve_item (name) {
     return Api().post('approve_item', name)
+  },
+
+  admin_add_item (Name, Type) {
+    return Api().post('admin_add_item', Name, Type)
   }
 }
