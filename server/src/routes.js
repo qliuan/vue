@@ -109,4 +109,7 @@ module.exports = (app) => {
 
   app.post('/update_has',
     FarmItemController.update_has)
+
+  app.post('/admin_add_item',
+    FarmItemController.admin_add_item)
 }

@@ -18,7 +18,7 @@ export default {
   },
 
   admin_confirmed_overview () {
-    return Api().post('admin_confirmed_overvie')
+    return Api().post('admin_confirmed_overview')
   },
 
   admin_manage_property (id, admin) {
@@ -47,5 +47,9 @@ export default {
 
   update_has (name) {
     return Api().post('update_has', name)
+  },
+
+  admin_add_item (Name, Type) {
+    return Api().post('admin_add_item', Name, Type)
   }
 }
