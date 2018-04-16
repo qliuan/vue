@@ -95,7 +95,7 @@ export default {
 
     async back () {
       this.$router.push({
-        name: 'adminoverview'
+        name: 'admin_overview'
       })
     }
   }

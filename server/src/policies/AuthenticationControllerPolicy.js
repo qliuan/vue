@@ -4,11 +4,11 @@ module.exports = {
   register (req, res, next) {
     const schema = {
       username: Joi.string().regex(
-        new RegExp('^[a-zA-z0-9]{0,20}$')
+        new RegExp('^[a-zA-Z0-9]{0,20}$')
       ),
       email: Joi.string().email(),
       password: Joi.string().regex(
-        new RegExp('^[a-zA-z0-9]{8,16}$')
+        new RegExp('^[a-zA-Z0-9]{8,16}$')
       ),
       usertype: Joi.string().valid('ADMIN', 'OWNER', 'VISITOR')
     }

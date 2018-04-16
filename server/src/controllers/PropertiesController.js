@@ -3,9 +3,9 @@ const connection = config.connection
 
 module.exports = {
   async owner_overview (req, res) {
-    var sql = `select Name, Street, City, Zip, Size, PropertyType, IsPublic,IsCommercial, ID, (ApprovedBy is not null) as IsValid, count(*) as Visits, avg(Rating) as Avg_Rating from Property left outer join Visit on PropertyID = ID where Owner = ? group by ID order by Name;`
-    // var sqlPara = [req.body.username]
-    var sqlPara = ['farmowner']
+    var sql = `select Name, Street, City, Zip, Size, PropertyType, IsPublic,IsCommercial, ID, (ApprovedBy is not null) as IsValid, sum(!isnull(VisitDate)) as Visits, avg(Rating) as Avg_Rating from Property left outer join Visit on PropertyID = ID where Owner = ? group by ID order by Name;`
+    var sqlPara = [req.body.username]
+    // var sqlPara = ['farmowner']
     connection.query(sql, sqlPara, function (err, result) {
       if (err) {
         res.status(400).send({
@@ -18,7 +18,7 @@ module.exports = {
   },
 
   async owner_property_detail (req, res) {
-    var sql = `select Name, Owner, Email, Street, City, Zip, Size, PropertyType, IsPublic,IsCommercial, ID, (ApprovedBy is not null) as IsValid, count(*) as Visits, avg(Rating) as Avg_Rating from (Property left outer join Visit on PropertyID = ID) left outer join User on Property.Owner = User.Username where ID = ? group by ID order by Name;`
+    var sql = `select Name, Owner, Email, Street, City, Zip, Size, PropertyType, IsPublic,IsCommercial, ID, (ApprovedBy is not null) as IsValid, sum(!isnull(VisitDate)) as Visits, avg(Rating) as Avg_Rating from (Property left outer join Visit on PropertyID = ID) left outer join User on Property.Owner = User.Username where ID = ? group by ID order by Name;`
     var sqlPara = [req.body.id]
     connection.query(sql, sqlPara, function (err, result) {
       if (err) {
@@ -47,9 +47,8 @@ module.exports = {
   },
 
   async owner_others_overview (req, res) {
-    var sql = `select Name, Street, City, Zip, Size, PropertyType, IsPublic,IsCommercial, ID, (ApprovedBy is not null) as IsValid, count(*) as Visits, avg(Rating) as Avg_Rating from Property left outer join Visit on PropertyID = ID where Owner != ? and ApprovedBy is not null group by ID order by Name;`
-    // var sqlPara = [req.body.username]
-    var sqlPara = ['farmowner']
+    var sql = `select Name, Street, City, Zip, Size, PropertyType, IsPublic,IsCommercial, ID, (ApprovedBy is not null) as IsValid, sum(!isnull(VisitDate)) as Visits, avg(Rating) as Avg_Rating from Property left outer join Visit on PropertyID = ID where Owner != ? and ApprovedBy is not null group by ID order by Name;`
+    var sqlPara = [req.body.username]
     connection.query(sql, sqlPara, function (err, result) {
       if (err) {
         res.status(400).send({
@@ -138,6 +137,7 @@ module.exports = {
       res.send(result)
     })
   },
+
   async visitor_overview (req, res) {
     var sql = `select Name, Street, City, Zip, Size, PropertyType, IsPublic,IsCommercial, ID, (ApprovedBy is not null) as IsValid, count(*) as Visits, avg(Rating) as Avg_Rating from Property left outer join Visit on PropertyID = ID where IsPublic = TRUE and ApprovedBy is not NULL group by ID order by Name;`
     connection.query(sql, function (err, result) {

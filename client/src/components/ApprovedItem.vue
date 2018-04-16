@@ -1,7 +1,7 @@
 <template>
   <v-layout column>
     <v-flex xs6 offset-xs0>
-      <h1>Pending Animals/Crops</h1>
+      <h1>Approved Animals/Crops</h1>
       <v-text-field
         label="Search"
         v-model="search"
@@ -82,11 +82,20 @@ export default {
         console.log(error)
         this.error = error.response.data.error
       }
+      try {
+        const response2 = await AdminService.update_has({
+          name: prop.Name
+        })
+        console.log(response2)
+      } catch (error) {
+        console.log(error)
+        this.error = error.response.data.error
+      }
     },
 
     async back () {
       this.$router.push({
-        name: 'adminoverview'
+        name: 'admin_overview'
       })
     }
   }

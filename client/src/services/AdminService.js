@@ -43,5 +43,9 @@ export default {
 
   approve_item (name) {
     return Api().post('approve_item', name)
+  },
+
+  update_has (name) {
+    return Api().post('update_has', name)
   }
 }

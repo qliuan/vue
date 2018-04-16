@@ -13,6 +13,7 @@
           @click="navigateTo({name: 'ownerlist'})">
           View Owner List
         </v-btn>
+        <br>
         <v-btn color="primary"
           @click="navigateTo({name: 'confirmed_property_list'})">
           View Confirmed Properties
