@@ -7,6 +7,14 @@
       </v-btn>
     </v-toolbar-title>
 
+    <v-toolbar-items>
+      <v-btn flat dark
+        v-if="$store.state.isUserLoggedIn"
+        @click="goToOverview()">
+        Overview
+      </v-btn>
+    </v-toolbar-items>
+
     <v-spacer></v-spacer>
 
     <v-toolbar-items>
@@ -45,6 +53,7 @@
 <script>
 // controller
 export default {
+
   methods: {
     navigateTo (route) {
       this.$router.push(route)
@@ -55,6 +64,28 @@ export default {
       this.$router.push({
         name: 'root'
       })
+    },
+    goToOverview () {
+      var type = this.$store.state.user.UserType
+      switch (type) {
+        case 'OWNER':
+          // jump to owner_overview page
+          this.$router.push({
+            name: 'owner_overview'
+          })
+          break
+        case 'ADMIN':
+          // jump to admin_overview page
+          this.$router.push({
+            name: 'admin_overview'
+          })
+          break
+        default:
+          // jump to visitor_overview page
+          this.$router.push({
+            name: 'visitor_overview'
+          })
+      }
     }
   }
 }

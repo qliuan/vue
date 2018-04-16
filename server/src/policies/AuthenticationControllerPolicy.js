@@ -23,6 +23,7 @@ module.exports = {
     if (error) {
       switch (error.details[0].context.key) {
         case 'username':
+          console.log(error, req.body.username)
           res.status(400).send({
             error: 'Your username cannot be longer than 20 characters'
           })
@@ -48,6 +49,7 @@ module.exports = {
           })
           break
         default:
+          console.log(error, req.body.username)
           res.status(400).send({
             error: error
           })
