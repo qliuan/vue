@@ -97,7 +97,10 @@
             <h3>{{crop.Name}}</h3>
           </td>
           <td>
-            <i class="material-icons" @click='deleteItem(crop.Name, crop.Type)'>delete</i>
+            <!-- <i class="material-icons" @click='deleteItem(crop.Name, crop.Type)'>delete</i> -->
+            <v-btn icon class="mx-0" @click="deleteItem(crop.Name, crop.Type)">
+              <v-icon color="cyan">delete</v-icon>
+            </v-btn>
           </td>
         </v-flex>
       </div>
@@ -113,7 +116,10 @@
             <h3>{{animal.Name}}</h3>
           </td>
           <td>
-            <i class="material-icons" @click='deleteItem(animal.Name, animal.Type)'>delete</i>
+            <!-- <i class="material-icons" @click='deleteItem(animal.Name, animal.Type)'>delete</i> -->
+            <v-btn icon class="mx-0" @click="deleteItem(animal.Name, animal.Type)">
+              <v-icon color="cyan">delete</v-icon>
+            </v-btn>
           </td>
         </v-flex>
       </div>

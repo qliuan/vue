@@ -105,6 +105,7 @@ export default {
       property.IsPublic = Boolean(Number(property.IsPublic))
       property.IsCommercial = Boolean(Number(property.IsCommercial))
       property.ID = Number(property.ID).toLocaleString('en-US', {minimumIntegerDigits: 5, useGrouping: false})
+      property.Avg_Rating = property.Avg_Rating || 'N/A'
     })
     this.items = this.data = data
   },

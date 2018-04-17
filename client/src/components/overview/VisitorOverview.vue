@@ -3,10 +3,31 @@
     <v-flex xs6 offset-xs0>
       <h1>Welcome {{username}} !</h1>
       <h2>All public properties:</h2>
-      <v-text-field
-        label="Search"
-        v-model="search"
-      ></v-text-field>
+
+      <v-layout row>
+        <v-flex xs1 />
+        <v-flex xs2>
+          <h3>Search By</h3>
+          <select v-model="filterKey" class="select-style">
+            <option selected disabled>Please select one</option>
+            <option v-for="key in keys" :key="key">{{key}}</option>
+          </select>
+        </v-flex>
+        <v-flex xs1>
+          <v-text-field
+              label="Search"
+              v-model="filter"
+            ></v-text-field>
+        </v-flex>
+        <v-flex xs1>
+          <v-btn
+            @click='search'
+            class="cyan"
+            dark>
+            Search
+          </v-btn>
+        </v-flex>
+      </v-layout>
 
       <v-data-table
         :headers="headers"
@@ -29,7 +50,6 @@
           <td class="text-xs-right">{{ props.item.IsPublic }}</td>
           <td class="text-xs-right">{{ props.item.IsCommercial }}</td>
           <td class="text-xs-right">{{ props.item.ID }}</td>
-          <td class="text-xs-right">{{ props.item.IsValid }}</td>
           <td class="text-xs-right">{{ props.item.Visits }}</td>
           <td class="text-xs-right">{{ props.item.Avg_Rating }}</td>
         </template>
@@ -52,21 +72,25 @@ export default {
       username: '',
       headers: [
         { text: 'Name', value: 'Name' },
-        { text: 'Address', value: 'Street', sortable: false }, /*, align: 'left' */
+        { text: 'Street', value: 'Street', sortable: false }, /*, align: 'left' */
         { text: 'City', value: 'City' },
         { text: 'Zip', value: 'Zip', sortable: false },
         { text: 'Size', value: 'Size', sortable: false },
-        { text: 'Type', value: 'PropertyType' },
-        { text: 'Is Public', value: 'IsPublic', sortable: false },
-        { text: 'Is Commercial', value: 'IsCommercial', sortable: false },
+        { text: 'PropertyType', value: 'PropertyType' },
+        { text: 'IsPublic', value: 'IsPublic', sortable: false },
+        { text: 'IsCommercial', value: 'IsCommercial', sortable: false },
         { text: 'ID', value: 'ID', sortable: false },
-        { text: 'Is Valid', value: 'IsValid', sortable: false },
         { text: 'Visits', value: 'Visits' },
-        { text: 'Avg. Rating', value: 'Avg_Rating' }
+        { text: 'Avg_Rating', value: 'Avg_Rating' }
       ],
       items: [],
       data: [],
-      search: '',
+      filter: '',
+      filterKey: '',
+      keys: [
+        'Name', 'Street', 'City', 'Zip', 'Size', 'PropertyType',
+        'IsPublic', 'IsCommercial', 'ID', 'Visits', 'Avg_Rating'
+      ],
       error: null
     }
   },
@@ -78,6 +102,7 @@ export default {
       property.IsCommercial = Boolean(Number(property.IsCommercial))
       property.IsValid = Boolean(Number(property.IsValid))
       property.ID = Number(property.ID).toLocaleString('en-US', {minimumIntegerDigits: 5, useGrouping: false})
+      property.Avg_Rating = property.Avg_Rating || 'N/A'
     })
     this.items = this.data = data
   },
@@ -127,6 +152,34 @@ export default {
         name: 'view_visit_history',
         params: { username: this.username }
       })
+    },
+
+    async search () {
+      var key = this.filterKey
+      var filter = this.filter
+      if (filter === '') {
+        this.items = this.data
+        return
+      }
+      if (key === '') {
+        // filter the data
+        this.items = this.data.filter( // for all objects
+          function (obj) { // for all keys
+            return Object.keys(obj).some(function (key) {
+              try {
+                return obj[key].toString().toLowerCase().indexOf(filter.toLowerCase()) > -1
+              } catch (err) {
+                return false
+              }
+            })
+          })
+      } else {
+        // filter the data
+        this.items = this.data.filter( // for all objects
+          function (obj) { // for all keys
+            return obj[key].toString().toLowerCase().indexOf(filter.toLowerCase()) > -1
+          })
+      }
     }
   }
 }
