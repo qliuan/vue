@@ -60,7 +60,7 @@
               <option>ORCHARD</option>
             </select>
           </div>
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-4" v-if="property_type == 'FARM'">
             <span>Select Animal</span>
             <select v-model="animals" style="background-color:lightblue">
               <option v-for="option in animalOptions" v-bind:value="option.Name" v-bind:key="option.Name">
@@ -68,7 +68,7 @@
               </option>
             </select>
           </div>
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-4" v-if="property_type">
             <span>Select Crop</span>
             <select v-model="crops" style="background-color:lightblue">
               <option v-for="option in cropOptions" v-bind:value="option.Name" v-bind:key="option.Name">
@@ -91,7 +91,10 @@
             <option>true</option>
             <option>false</option>
           </select>
-          <div class="error" v-html="error" />
+        <div class="error" v-html="error" />
+        <v-alert v-if="comment" type="success" :value="true">
+          {{comment}}
+        </v-alert>
         <v-btn
           @click='register'
           class="cyan"
@@ -120,13 +123,14 @@ export default {
       password: '',
       confirm_password: '',
       usertype: 'OWNER',
+      comment: null,
       error: null,
       property_name: '',
       street_address: '',
       city: '',
       zip: '',
       acres: '',
-      property_type: '',
+      property_type: null,
       animals: '',
       crops: '',
       isPublic: true,
@@ -182,7 +186,6 @@ export default {
     async register () {
       console.log('register was clicked', this.password, this.confirm_password)
       if (!(this.password === this.confirm_password)) {
-        console.log('not same')
         this.error = 'Confirm Password must be the same as your Password'
       } else {
         try {
@@ -199,8 +202,8 @@ export default {
             property_type: this.property_type,
             animals: this.animals,
             crops: this.crops,
-            isPublic: true,
-            isCommercial: true
+            isPublic: this.isPublic,
+            isCommercial: this.isCommercial
 
           })
           console.log(response)
@@ -221,11 +224,10 @@ export default {
             crops: this.crops,
             isPublic: true,
             isCommercial: true
-
           })
           console.log('insert into property message below: ')
           console.log(response)
-          this.$router.push('login')
+          // this.$router.push('login')
         } catch (error) {
           console.log(error)
           this.error = error.response.data.error
@@ -276,7 +278,11 @@ export default {
             this.error = error.response.data.error
           }
         }
-        this.$router.push({name: 'login'})
+        this.comment = 'Visitor Account Registeration Succeeded'
+        setTimeout(function () {
+          this.comment = ''
+          this.$router.push({name: 'login'})
+        }.bind(this), 2000)
       }
     }
   },

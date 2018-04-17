@@ -75,6 +75,7 @@ export default {
       property.IsCommercial = Boolean(Number(property.IsCommercial))
       property.IsValid = Boolean(Number(property.IsValid))
       property.ID = Number(property.ID).toLocaleString('en-US', {minimumIntegerDigits: 5, useGrouping: false})
+      property.Avg_Rating = property.Avg_Rating || 'N/A'
     })
 
     this.property = pList[0]

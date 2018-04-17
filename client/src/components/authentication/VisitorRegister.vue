@@ -26,10 +26,14 @@
           <v-text-field
             label="Confirm Password"
             v-model="confirm_password"
+            type="password"
           ></v-text-field>
         </form>
         <br>
         <div class="error" v-html="error" />
+        <v-alert v-if="comment" type="success" :value="true">
+          {{comment}}
+        </v-alert>
         <br>
         <v-btn
           @click='register'
@@ -56,16 +60,11 @@ export default {
       password: '',
       confirm_password: '',
       usertype: 'VISITOR',
+      comment: null,
       error: null
-
     }
   },
-  // v-model is for 2-way binding
-  // watch: {
-  //   email (value) {
-  //     console.log('Email has changed to', value)
-  //   }
-  // }
+
   methods: {
     async register () {
       // console.log('register was clicked', this.email, this.password)
@@ -80,11 +79,14 @@ export default {
             usertype: this.usertype
           })
           console.log(response)
-          this.$router.push('login')
+          this.comment = 'Visitor Account Registeration Succeeded'
+          setTimeout(function () {
+            this.comment = ''
+            this.$router.push({name: 'login'})
+          }.bind(this), 2000)
         } catch (error) {
           this.error = error.response.data.error
         }
-        this.$router.push({name: 'login'})
       }
     }
   },
