@@ -126,7 +126,7 @@ module.exports = {
   },
 
   async unconfirmed_property_list (req, res) {
-    var sql = `select Name, Street, City, Zip, Size, PropertyType, IsPublic, IsCommercial, ID, ApprovedBy, Owner from Property left outer join Visit on PropertyID = ID where ApprovedBy='NULL' or ApprovedBy is null group by ID order by Name`
+    var sql = `select Name, Street, City, Zip, Size, PropertyType, IsPublic, IsCommercial, ID, ApprovedBy, Owner from Property where ApprovedBy='NULL' or ApprovedBy is null`
     connection.query(sql, function (err, result) {
       if (err) {
         res.status(400).send({
