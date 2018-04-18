@@ -154,62 +154,66 @@ export default {
   methods: {
     async create () {
       // console.log('Debugging', this.$store.state.user.Username, this.property_name, this.street_address, this.city, this.zip, this.acres, this.property_type, this.animals, this.crops, this.isPublic, this.isCommercial)
-      try {
-        const response = await PropertyService.insert({
-          username: this.$store.state.user.Username,
-          propertyName: this.property_name,
-          streetAddress: this.street_address,
-          city: this.city,
-          zip: this.zip,
-          acres: this.acres,
-          propertyType: this.property_type,
-          animals: this.animals,
-          crops: this.crops,
-          isPublic: true,
-          isCommercial: true
-        })
-        console.log(response)
-      } catch (error) {
-        // console.log(error)
-        this.error = error.response.data.error
-      }
-
-      // Get Property ID back by property name
-      try {
-        const propertyID = await PropertyService.get_id_by_name({
-          // propertyName: 'Kenari Company Farm'
-          propertyName: this.property_name
-        })
-        this.property_id = propertyID.data[0].ID
-        // console.log(propertyID)
-      } catch (error) {
-        this.error = error.response.data.error
-      }
-
-      // insert into Has table
-      try {
-        const crops = await HasService.insert({
-          propertyID: this.property_id,
-          farmitem: this.crops
-        })
-        console.log(crops)
-      } catch (error) {
-        this.error = error.response.data.error
-      }
-      if (this.property_type === 'FARM') {
+      if (this.zip.length !== 5) {
+        this.error = 'Please enter 5-digits zip code'
+      } else {
         try {
-          const animals = await HasService.insert({
-            propertyID: this.property_id,
-            farmitem: this.animals
+          const response = await PropertyService.insert({
+            username: this.$store.state.user.Username,
+            propertyName: this.property_name,
+            streetAddress: this.street_address,
+            city: this.city,
+            zip: this.zip,
+            acres: this.acres,
+            propertyType: this.property_type,
+            animals: this.animals,
+            crops: this.crops,
+            isPublic: true,
+            isCommercial: true
           })
-          console.log(animals)
+          console.log(response)
+        } catch (error) {
+          // console.log(error)
+          this.error = error.response.data.error
+        }
+
+        // Get Property ID back by property name
+        try {
+          const propertyID = await PropertyService.get_id_by_name({
+            // propertyName: 'Kenari Company Farm'
+            propertyName: this.property_name
+          })
+          this.property_id = propertyID.data[0].ID
+          // console.log(propertyID)
         } catch (error) {
           this.error = error.response.data.error
         }
+
+        // insert into Has table
+        try {
+          const crops = await HasService.insert({
+            propertyID: this.property_id,
+            farmitem: this.crops
+          })
+          console.log(crops)
+        } catch (error) {
+          this.error = error.response.data.error
+        }
+        if (this.property_type === 'FARM') {
+          try {
+            const animals = await HasService.insert({
+              propertyID: this.property_id,
+              farmitem: this.animals
+            })
+            console.log(animals)
+          } catch (error) {
+            this.error = error.response.data.error
+          }
+        }
+        // console.log('\n\nCreation Ends Here\n\n', this.error)
+        this.error = 'Creation Succeeded'
+        setTimeout(function () { this.$router.push({ name: 'owner_overview' }) }.bind(this), 2000)
       }
-      // console.log('\n\nCreation Ends Here\n\n', this.error)
-      this.error = 'Creation Succeeded'
-      setTimeout(function () { this.$router.push({ name: 'owner_overview' }) }.bind(this), 2000)
     }
   },
   components: {
