@@ -101,7 +101,6 @@
           dark>
           Register
         </v-btn>
-
       </panel>
     </v-flex>
   </v-layout>
@@ -185,7 +184,9 @@ export default {
   methods: {
     async register () {
       console.log('register was clicked', this.password, this.confirm_password)
-      if (!(this.password === this.confirm_password)) {
+      if (this.zip.length !== 5) {
+        this.error = 'Please enter 5-digit zip code'
+      } else if (!(this.password === this.confirm_password)) {
         this.error = 'Confirm Password must be the same as your Password'
       } else {
         try {
