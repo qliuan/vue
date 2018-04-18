@@ -52,7 +52,7 @@ export default {
       property: {},
       animals: [],
       crops: [],
-      titles: ['Name', 'Owner', 'Email', 'Street', 'City', 'Zip', 'Size', 'PropertyType', 'IsPublic', 'IsCommercial', 'ID', 'IsValid', 'Avg_Rating'],
+      titles: ['Name', 'Owner', 'Email', 'Street', 'City', 'Zip', 'Size', 'PropertyType', 'IsPublic', 'IsCommercial', 'ID', 'IsValid', 'Visits', 'Avg_Rating'],
       error: null
     }
   },
