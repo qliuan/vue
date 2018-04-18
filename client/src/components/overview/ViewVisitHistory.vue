@@ -15,20 +15,20 @@
         class="elevation-1"
       >
         <template slot="items" slot-scope="props">
-          <td class="text-xs-right">
+          <td class="text-xs-left">
             <v-btn flat light
               @click="detail(props.item)">
               {{ props.item.Name }}
             </v-btn>
           </td>
-          <td class="text-xs-right">{{ props.item.VisitDate }}</td>
-          <td class="text-xs-right">{{ props.item.Rating }}</td>
-          <td>
+          <td class="text-xs-left">{{ props.item.VisitDate }}</td>
+          <td class="text-xs-left">{{ props.item.Rating }}</td>
+          <!-- <td>
             <v-btn class="cyan" dark
               @click="detail(props.item)">
               View Detail
             </v-btn>
-          </td>
+          </td> -->
         </template>
       </v-data-table>
       <div class="error" v-html="error" />
@@ -63,6 +63,14 @@ export default {
       username: this.username
     })).data
     this.items = this.data = data
+    console.log(this.items)
+    for (var i = 0; i < this.items.length; i++) {
+      var temp = this.items[i].VisitDate
+      temp = temp.replace('T', ' ')
+      temp = temp.replace('Z', '')
+      temp = temp.replace('.000', '')
+      this.items[i].VisitDate = temp
+    }
   },
   watch: {
     search (filter) {

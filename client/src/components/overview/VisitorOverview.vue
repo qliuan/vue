@@ -58,6 +58,9 @@
         @click="viewHistory()">
         View Visit History
       </v-btn>
+      <v-alert v-if="comment" type="success" :value="true">
+          {{comment}}
+        </v-alert>
       <div class="error" v-html="error" />
     </v-flex>
   </v-layout>
@@ -91,7 +94,8 @@ export default {
         'Name', 'Street', 'City', 'Zip', 'Size', 'PropertyType',
         'IsPublic', 'IsCommercial', 'ID', 'Visits', 'Avg_Rating'
       ],
-      error: null
+      error: null,
+      comment: null
     }
   },
   async mounted () {
@@ -175,10 +179,19 @@ export default {
           })
       } else {
         // filter the data
-        this.items = this.data.filter( // for all objects
-          function (obj) { // for all keys
-            return obj[key].toString().toLowerCase().indexOf(filter.toLowerCase()) > -1
-          })
+        if ((key === 'Avg_Rating') || (key === 'Visits')) {
+          var lower = Number(filter[0])
+          var upper = Number(filter[2])
+          this.items = this.data.filter( // for all objects
+            function (obj) { // for all keys
+              return ((obj[key] >= lower) && (obj[key] <= upper))
+            })
+        } else {
+          this.items = this.data.filter( // for all objects
+            function (obj) { // for all keys
+              return obj[key].toString().toLowerCase().indexOf(filter.toLowerCase()) > -1
+            })
+        }
       }
     }
   }

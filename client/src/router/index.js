@@ -137,7 +137,7 @@ export default new Router({
       component: VisitorPropertyDetail
     },
     {
-      path: '/visitor_property_detail',
+      path: '/visitor_visitedproperty_detail',
       name: 'visitor_visitedproperty_detail',
       component: VisitorVisitedPropertyDetail
     },

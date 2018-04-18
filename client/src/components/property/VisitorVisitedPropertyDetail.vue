@@ -57,7 +57,7 @@ export default {
       property: {},
       animals: [],
       crops: [],
-      titles: ['Name', 'Owner', 'Email', 'Street', 'City', 'Zip', 'Size', 'PropertyType', 'IsPublic', 'IsCommercial', 'ID', 'IsValid', 'Avg_Rating'],
+      titles: ['Name', 'Owner', 'Email', 'Street', 'City', 'Zip', 'Size', 'PropertyType', 'IsPublic', 'IsCommercial', 'ID', 'IsValid', 'Avg_Rating', 'Visits'],
       error: null,
       rating: 0.0,
       username: ''
@@ -106,13 +106,20 @@ export default {
           username: this.username,
           propertyID: this.id
         })
-        console.log(response)
       } catch (error) {
         this.error = error.response.data.error
       }
+
       this.$router.push({
-        name: 'visitor_overview'
+        name: 'visitor_property_detail',
+        params: {
+          id: this.id,
+          username: this.username
+        }
       })
+      // this.$router.push({
+      //   name: 'visitor_overview'
+      // })
     }
   }
 }

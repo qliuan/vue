@@ -34,10 +34,12 @@
         </div>
       </v-layout>
     </div>
+    <div style="color:red;font-size:25px;">Rate Your Visit, Range : 1 to 5</div>
     <v-text-field
-            label="Rate Your Visit"
             v-model="rating"
+            style="font-size:50px"
           ></v-text-field>
+    <div class="error" v-html="error" />
     <v-btn class="cyan" dark
       @click="log()">
       Log Visit
@@ -62,9 +64,9 @@ export default {
       property: {},
       animals: [],
       crops: [],
-      titles: ['Name', 'Owner', 'Email', 'Street', 'City', 'Zip', 'Size', 'PropertyType', 'IsPublic', 'IsCommercial', 'ID', 'IsValid', 'Avg_Rating'],
+      titles: ['Name', 'Owner', 'Email', 'Street', 'City', 'Zip', 'Size', 'PropertyType', 'IsPublic', 'IsCommercial', 'ID', 'IsValid', 'Avg_Rating', 'Visits'],
       error: null,
-      rating: 0.0,
+      rating: 1.0,
       username: ''
     }
   },
@@ -74,7 +76,6 @@ export default {
     var pList = (await PropertyService.owner_property_detail({
       id: this.id
     })).data
-
     pList.forEach(function (property) { // converting the formats
       property.IsPublic = Boolean(Number(property.IsPublic))
       property.IsCommercial = Boolean(Number(property.IsCommercial))
@@ -106,20 +107,32 @@ export default {
       })
     },
     async log () {
-      try {
-        const response = await VisitService.log({
-          username: this.username,
-          propertyID: this.id,
-          date: moment(String(new Date())).format('YYYY-MM-DD hh:mm:ss'),
-          rating: this.rating
+      if ((this.rating <= 5) && (this.rating >= 1)) {
+        try {
+          const response = await VisitService.log({
+            username: this.username,
+            propertyID: this.id,
+            date: moment(String(new Date())).format('YYYY-MM-DD hh:mm:ss'),
+            rating: this.rating
+          })
+        } catch (error) {
+          this.error = error.response.data.error
+        }
+
+
+        this.$router.push({
+          name: 'visitor_visitedproperty_detail',
+          params: {
+            id: this.id,
+            username: this.username
+          }
         })
-        console.log(response)
-      } catch (error) {
-        this.error = error.response.data.error
+        // this.$router.push({
+        //   name: 'visitor_overview'
+        // })
+      } else {
+        this.error = 'Pleas enter a rating within valid range : [1,5]'
       }
-      this.$router.push({
-        name: 'visitor_overview'
-      })
     }
   }
 }
