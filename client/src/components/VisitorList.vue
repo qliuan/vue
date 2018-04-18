@@ -102,6 +102,7 @@ export default {
   methods: {
     async delete_account (prop) {
       try {
+        // console.log('delete', prop.Username)
         const response = await AdminService.delete_account({
           username: prop.Username
         })

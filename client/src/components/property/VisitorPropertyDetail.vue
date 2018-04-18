@@ -115,10 +115,10 @@ export default {
             date: moment(String(new Date())).format('YYYY-MM-DD hh:mm:ss'),
             rating: this.rating
           })
+          console.log(response)
         } catch (error) {
           this.error = error.response.data.error
         }
-
 
         this.$router.push({
           name: 'visitor_visitedproperty_detail',

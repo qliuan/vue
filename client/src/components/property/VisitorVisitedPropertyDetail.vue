@@ -106,6 +106,7 @@ export default {
           username: this.username,
           propertyID: this.id
         })
+        console.log(response)
       } catch (error) {
         this.error = error.response.data.error
       }
