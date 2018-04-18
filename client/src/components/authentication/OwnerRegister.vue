@@ -222,8 +222,8 @@ export default {
             propertyType: this.property_type,
             animals: this.animals,
             crops: this.crops,
-            isPublic: true,
-            isCommercial: true
+            isPublic: this.isPublic,
+            isCommercial: this.isCommercial
           })
           console.log('insert into property message below: ')
           console.log(response)
