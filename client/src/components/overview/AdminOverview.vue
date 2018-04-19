@@ -1,7 +1,7 @@
 <template>
   <v-layout align-center>
     <v-flex xs12 sm4 text-xs-center>
-      <v-toolbar-title>Welcome</v-toolbar-title>
+      <v-toolbar-title>Welcome {{this.$store.state.user.Username}} !</v-toolbar-title>
       <div>
         <v-btn color="primary"
           @click="navigateTo({name: 'visitorlist'})">

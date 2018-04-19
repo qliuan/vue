@@ -21,7 +21,7 @@
           dark>
           Login
         </v-btn>
-        <div v-html="comments" />
+        <!-- <div v-html="comments" /> -->
       </panel>
     </v-flex>
   </v-layout>
@@ -36,9 +36,9 @@ export default {
     return {
       email: '',
       password: '',
-      error: null,
+      error: null
       // comments: `'farmowner','farmerJoe@gmail.com','farming123','OWNER'`
-      comment: null
+      // comment: null
     }
   },
   methods: {

@@ -72,7 +72,7 @@ export default {
       filter: '',
       filterKey: '',
       keys: [
-        'Username', 'Email', 'Logged Visits'
+        'Username', 'Email', 'Logs'
       ],
       error: null
     }
