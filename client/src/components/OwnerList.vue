@@ -77,7 +77,7 @@ export default {
       filter: '',
       filterKey: '',
       keys: [
-        'Username', 'Email', 'Number of Properties'
+        'Username', 'Email', 'PropNum'
       ],
       error: null
     }

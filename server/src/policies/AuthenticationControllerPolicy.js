@@ -17,7 +17,8 @@ module.exports = {
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,
-      usertype: req.body.usertype
+      usertype: req.body.usertype,
+      zip: req.body.zip
     }, schema)
 
     if (error) {
@@ -55,7 +56,8 @@ module.exports = {
           })
       }
     } else {
-      next() // go the next line and continue
+      console.log(req.body.zip)
+      // next() // go the next line and continue
     }
   }
 }

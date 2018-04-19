@@ -140,7 +140,7 @@ module.exports = {
   },
 
   async admin_add_item (req, res) {
-    var sql = 'insert into FarmItem values (?, ?, true);'
+    var sql = 'insert into FarmItem values (?, true, ?);'
     var sqlPara = [req.body.Name, req.body.Type]
     connection.query(sql, sqlPara, function (err, result) {
       if (err) {
