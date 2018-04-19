@@ -14,9 +14,9 @@
         </v-flex>
         <v-flex xs1>
           <v-text-field
-              label="Search"
-              v-model="filter"
-            ></v-text-field>
+            label="Search"
+            v-model="filter"
+          ></v-text-field>
         </v-flex>
         <v-flex xs1>
           <v-btn
@@ -24,6 +24,31 @@
             class="cyan"
             dark>
             Search
+          </v-btn>
+        </v-flex>
+      </v-layout>
+
+      <v-layout row>
+        <v-flex xs1 />
+        <v-flex xs2>
+          <h3>Type</h3>
+          <select v-model="newItemType" class="select-style">
+            <option disabled>New Item Type</option>
+            <option v-for="type in itemTypes" :key="type">{{type}}</option>
+          </select>
+        </v-flex>
+        <v-flex xs1>
+          <v-text-field
+            label="Enter Name"
+            v-model="newItemName"
+          ></v-text-field>
+        </v-flex>
+        <v-flex xs1>
+          <v-btn
+            @click="admin_add_item()"
+            class="cyan"
+            dark>
+            Add to Approved List
           </v-btn>
         </v-flex>
       </v-layout>
@@ -44,26 +69,6 @@
         </template>
       </v-data-table>
 
-      <v-layout row>
-        <v-flex xs1>
-          <span>Type</span>
-          <select v-model="newItemType" class="select-style">
-            <option disabled>New Item Type</option>
-            <option v-for="type in itemTypes" :key="type">{{type}}</option>
-          </select>
-          <v-text-field
-            label="Enter Name"
-            v-model="newItemName"
-          ></v-text-field>
-        </v-flex>
-      </v-layout>
-
-      <v-btn
-        @click="admin_add_item()"
-        class="cyan"
-        dark>
-        Add to Approved List
-      </v-btn>
       <v-btn class="cyan" dark
         @click="back()">
         Back
@@ -98,22 +103,6 @@ export default {
   async mounted () {
     var data = (await AdminService.get_approved_items()).data
     this.items = this.data = data
-  },
-
-  watch: {
-    search (filter) {
-      // filter the data
-      this.items = this.data.filter( // for all objects
-        function (obj) { // for all keys
-          return Object.keys(obj).some(function (key) {
-            try {
-              return obj[key].toString().toLowerCase().indexOf(filter) > -1
-            } catch (err) {
-              return false
-            }
-          })
-        })
-    }
   },
 
   methods: {
@@ -179,9 +168,12 @@ export default {
         console.log(response)
         var data = (await AdminService.get_approved_items()).data
         this.items = this.data = data
+        this.newItemType = ''
+        this.newItemName = ''
       } catch (error) {
         this.error = error.response.data.error
       }
+      // console.log(type, name)
     },
 
     async back () {

@@ -37,7 +37,8 @@ export default {
       email: '',
       password: '',
       error: null,
-      comments: `'farmowner','farmerJoe@gmail.com','farming123','OWNER'`
+      // comments: `'farmowner','farmerJoe@gmail.com','farming123','OWNER'`
+      comment: null
     }
   },
   methods: {
