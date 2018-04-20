@@ -324,9 +324,10 @@ export default {
     },
 
     async back () {
-      this.$router.push({
-        name: 'admin_overview'
-      })
+      // this.$router.push({
+      //   name: 'admin_overview'
+      // })
+      this.$router.go(-1)
     },
 
     async save () {

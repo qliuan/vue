@@ -158,20 +158,24 @@ export default {
     },
 
     async admin_add_item () {
-      var type = this.newItemType
-      var name = this.newItemName
-      try {
-        const response = await AdminService.admin_add_item({
-          Name: name,
-          Type: type
-        })
-        console.log(response)
-        var data = (await AdminService.get_approved_items()).data
-        this.items = this.data = data
-        this.newItemType = ''
-        this.newItemName = ''
-      } catch (error) {
-        this.error = error.response.data.error
+      if (this.newItemName === '') {
+        this.error = 'Please enter the name of the item you wish to add'
+      } else {
+        var type = this.newItemType
+        var name = this.newItemName
+        try {
+          const response = await AdminService.admin_add_item({
+            Name: name,
+            Type: type
+          })
+          console.log(response)
+          var data = (await AdminService.get_approved_items()).data
+          this.items = this.data = data
+          this.newItemType = ''
+          this.newItemName = ''
+        } catch (error) {
+          this.error = error.response.data.error
+        }
       }
       // console.log(type, name)
     },
