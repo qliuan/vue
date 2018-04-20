@@ -6,7 +6,7 @@ module.exports = {
       username: Joi.string().regex(
         new RegExp('^[a-zA-Z0-9_ -]{0,20}$')
       ),
-      email: Joi.string().email(),
+      email: Joi.string().regex(/\S+@\S+\.\S+/),
       password: Joi.string().regex(
         new RegExp('^[a-zA-Z0-9]{8,16}$')
       ),

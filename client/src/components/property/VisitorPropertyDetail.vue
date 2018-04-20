@@ -34,11 +34,20 @@
         </div>
       </v-layout>
     </div>
-    <div style="color:red;font-size:25px;">Rate Your Visit, Range : 1 to 5</div>
-    <v-text-field
-            v-model="rating"
-            style="font-size:50px"
-          ></v-text-field>
+
+    <v-layout row>
+      <v-flex xs6>
+        <div style="color:red;font-size:40px;">Rate Your Visit, Range : 1 to 5</div>
+      </v-flex>
+      <v-flex xs2>
+        <v-text-field
+          v-model="rating"
+          style="font-size:50px"
+          label="Rating"
+        ></v-text-field>
+      </v-flex>
+    </v-layout>
+
     <div class="error" v-html="error" />
     <v-btn class="cyan" dark
       @click="log()">
@@ -66,7 +75,7 @@ export default {
       crops: [],
       titles: ['Name', 'Owner', 'Email', 'Street', 'City', 'Zip', 'Size', 'PropertyType', 'IsPublic', 'IsCommercial', 'ID', 'IsValid', 'Avg_Rating', 'Visits'],
       error: null,
-      rating: 1.0,
+      rating: null,
       username: ''
     }
   },

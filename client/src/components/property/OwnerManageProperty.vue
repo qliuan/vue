@@ -395,6 +395,15 @@ export default {
 
     async save () {
       // Update the property
+      var pattern = /^[0-9]{5}$/
+      if (!pattern.test(this.property.Zip)) {
+        this.error = 'Please enter 5-digit zip code'
+        setTimeout(function () {
+          this.error = null
+        }.bind(this), 2000)
+        return
+      }
+
       try {
         await PropertyService.update_property({
           property: this.property,

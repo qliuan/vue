@@ -3,10 +3,6 @@
     <v-flex xs6 offset-xs0>
       <h1>Welcome {{username}} !</h1>
       <h2>Your Visit History:</h2>
-      <v-text-field
-        label="Search"
-        v-model="search"
-      ></v-text-field>
 
       <v-data-table
         :headers="headers"
