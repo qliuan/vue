@@ -220,6 +220,7 @@ export default {
     this.property = pList[0]
 
     this.title = this.property.Name
+    var type = this.property.PropertyType
 
     var items = (await FarmItemService.get_property_items({
       id: this.id
@@ -242,8 +243,22 @@ export default {
 
     this.validCrops = otherItems.filter( // for all objects
       function (obj) { // for all keys
-        var flag = obj.Type.indexOf('ANIMAL') > -1
-        return !flag
+        if (obj.Type.indexOf('ANIMAL') > -1) {
+          return false
+        } else {
+          console.log('Filter by Property Type', type)
+          if (type === 'GARDEN') {
+            var flag1 = obj.Type.indexOf('FLOWER') > -1 || obj.Type.indexOf('VEGETABLE') > -1
+            console.log(obj.Name, obj.Type, flag1)
+            return flag1
+          } else if (type === 'ORCHARD') {
+            var flag2 = obj.Type.indexOf('NUT') > -1 || obj.Type.indexOf('FRUIT') > -1
+            console.log(obj.Name, obj.Type, flag2)
+            return flag2
+          } else {
+            return true
+          }
+        }
       })
     this.validAnimals = otherItems.filter( // for all objects
       function (obj) { // for all keys
@@ -331,6 +346,15 @@ export default {
 
     async save () {
       // Update the property
+      var pattern = /^[0-9]{5}$/
+      if (!pattern.test(this.property.Zip)) {
+        this.error = 'Please enter 5-digit zip code'
+        setTimeout(function () {
+          this.error = null
+        }.bind(this), 2000)
+        return
+      }
+
       try {
         await PropertyService.update_property({
           property: this.property,
@@ -357,8 +381,10 @@ export default {
 
         this.comment = 'Updating the Property Succeeded'
         setTimeout(function () {
-          this.comment = null
-        }.bind(this), 5000)
+          this.$router.push({
+            name: 'confirmed_property_list'
+          })
+        }.bind(this), 2000)
       } catch (error) {
         this.error = error.response.data.error
       }
@@ -371,8 +397,10 @@ export default {
         })
         this.comment = 'Deleting the Porperty Succeeded'
         setTimeout(function () {
-          this.comment = null
-        }.bind(this), 5000)
+          this.$router.push({
+            name: 'confirmed_property_list'
+          })
+        }.bind(this), 2000)
       } catch (error) {
         this.error = error.response.data.error
       }
