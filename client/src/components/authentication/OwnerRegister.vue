@@ -161,7 +161,25 @@ export default {
             Proptype: value,
             isAnimal: false
           })
-          this.cropOptions = crops.data
+          this.cropOptions = crops.data.filter( // for all objects
+            function (obj) { // for all keys
+              if (obj.Type.indexOf('ANIMAL') > -1) {
+                return false
+              } else {
+                console.log('Filter by Property Type', value)
+                if (value === 'GARDEN') {
+                  var flag1 = obj.Type.indexOf('FLOWER') > -1 || obj.Type.indexOf('VEGETABLE') > -1
+                  console.log(obj.Name, obj.Type, flag1)
+                  return flag1
+                } else if (value === 'ORCHARD') {
+                  var flag2 = obj.Type.indexOf('NUT') > -1 || obj.Type.indexOf('FRUIT') > -1
+                  console.log(obj.Name, obj.Type, flag2)
+                  return flag2
+                } else {
+                  return true
+                }
+              }
+            })
           console.log(crops)
         } catch (error) {
           this.error = error.response.data.error
@@ -184,7 +202,8 @@ export default {
   methods: {
     async register () {
       console.log('register was clicked', this.password, this.confirm_password)
-      if (this.zip.length !== 5) {
+      var pattern = /^[0-9]{5}$/
+      if (!pattern.test(this.zip)) {
         this.error = 'Please enter 5-digit zip code'
       } else if (!(this.password === this.confirm_password)) {
         this.error = 'Confirm Password must be the same as your Password'

@@ -6,7 +6,7 @@ module.exports = {
       username: Joi.string().regex(
         new RegExp('^[a-zA-Z0-9_ -]{0,20}$')
       ),
-      email: Joi.string().email(),
+      email: Joi.string().regex(/\S+@\S+\.\S+/),
       password: Joi.string().regex(
         new RegExp('^[a-zA-Z0-9]{8,16}$')
       ),
@@ -17,8 +17,7 @@ module.exports = {
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,
-      usertype: req.body.usertype,
-      zip: req.body.zip
+      usertype: req.body.usertype
     }, schema)
 
     if (error) {
@@ -57,7 +56,7 @@ module.exports = {
       }
     } else {
       console.log(req.body.zip)
-      // next() // go the next line and continue
+      next() // go the next line and continue
     }
   }
 }
