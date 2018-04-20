@@ -87,6 +87,9 @@ export default {
         } catch (error) {
           this.error = error.response.data.error
         }
+        setTimeout(function () {
+          this.error = null
+        }.bind(this), 2000)
       }
     }
   },

@@ -58,10 +58,10 @@
         @click="viewHistory()">
         View Visit History
       </v-btn>
+      <div class="error" v-html="error" />
       <v-alert v-if="comment" type="success" :value="true">
           {{comment}}
-        </v-alert>
-      <div class="error" v-html="error" />
+      </v-alert>
     </v-flex>
   </v-layout>
 </template>
@@ -123,6 +123,17 @@ export default {
             }
           })
         })
+    },
+    filterKey (key) {
+      if (key === 'Avg_Rating') {
+        this.comment = 'Please enter a range within [1,5] seperate by "," with no space e.g. : 1,3'
+      }
+      if (key === 'Visits') {
+        this.comment = 'Please enter a range seperate by "," with no space e.g. : 1,3'
+      }
+      setTimeout(function () {
+        this.comment = null
+      }.bind(this), 2000)
     }
   },
   methods: {
@@ -180,8 +191,15 @@ export default {
       } else {
         // filter the data
         if ((key === 'Avg_Rating') || (key === 'Visits')) {
-          var lower = Number(filter[0])
-          var upper = Number(filter[2])
+          var lower = Number(filter.substr(0, filter.indexOf(',')))
+          // var upper = Number(filter[2])
+          var upper = Number(filter.substr(filter.indexOf(',') + 1))
+          if ((key === 'Avg_Rating') && ((lower > upper) || (lower < 0) || (upper > 5))) {
+            this.error = 'Pleas enter a valid range, e.g. 1,3'
+            setTimeout(function () {
+              this.error = ''
+            }.bind(this), 2000)
+          }
           this.items = this.data.filter( // for all objects
             function (obj) { // for all keys
               return ((obj[key] >= lower) && (obj[key] <= upper))

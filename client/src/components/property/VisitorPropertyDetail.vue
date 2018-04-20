@@ -34,7 +34,7 @@
         </div>
       </v-layout>
     </div>
-    <div style="color:red;font-size:25px;">Rate Your Visit, Range : 1 to 5</div>
+    <div style="color:red;font-size:25px;">Rate Your Visit, Range : integer from 1 to 5, if not it will be converted into an integer</div>
     <v-text-field
             v-model="rating"
             style="font-size:50px"
@@ -131,7 +131,7 @@ export default {
         //   name: 'visitor_overview'
         // })
       } else {
-        this.error = 'Pleas enter a rating within valid range : [1,5]'
+        this.error = 'Pleas enter a integer rating within valid range : [1,5]'
       }
     }
   }
