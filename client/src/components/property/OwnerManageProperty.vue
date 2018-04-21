@@ -474,6 +474,9 @@ export default {
         await PropertyService.delete_property({
           id: this.id
         })
+        await VisitService.delete_property_visits({
+          id: this.$route.params.id
+        })
         this.comment = 'Deleting the Porperty Succeeded'
         setTimeout(function () {
           this.$router.push({ name: 'owner_overview' })

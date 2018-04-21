@@ -185,6 +185,7 @@
 import PropertyService from '@/services/PropertyService'
 import FarmItemService from '@/services/FarmItemService'
 import HasService from '@/services/HasService'
+import VisitService from '@/services/VisitService'
 
 export default {
   data () {
@@ -392,7 +393,10 @@ export default {
     async deleteProperty () {
       try {
         await PropertyService.delete_property({
-          id: this.id
+          id: this.$route.params.id
+        })
+        await VisitService.delete_property_visits({
+          id: this.$route.params.id
         })
         this.comment = 'Deleting the Porperty Succeeded'
         setTimeout(function () {

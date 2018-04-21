@@ -14,6 +14,6 @@ export default {
     return Api().post('visit_history', username)
   },
   delete_property_visits (propertyID) {
-    return Api().post('test', propertyID)
+    return Api().post('delete_property_visits', propertyID)
   }
 }
