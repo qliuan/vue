@@ -399,6 +399,9 @@ export default {
           }.bind(this), 2000)
         }
       }
+      setTimeout(function () {
+        this.error = ''
+      }.bind(this), 2000)
     },
 
     async back () {

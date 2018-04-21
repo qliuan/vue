@@ -180,6 +180,11 @@ export default {
   },
   methods: {
     async register () {
+      if ((!this.property_name) || (!this.property_type) || (!this.street_address) || (!this.city) || (!this.zip) || (!this.acres) || (!this.password) || (!this.username) || (!this.email) || (!(!this.property_type === 'FARM' || this.animals)) || (!this.crops)) {
+        this.error = 'Please enter all required information'
+        setTimeout(function () { this.error = null }.bind(this), 2000)
+        return
+      }
       const checkpropertyID = await PropertyService.get_id_by_name({
         // propertyName: 'Kenari Company Farm'
         propertyName: this.property_name
@@ -196,8 +201,8 @@ export default {
         this.error = 'Please enter 5-digit zip code'
       } else if (!(this.password === this.confirm_password)) {
         this.error = 'Confirm Password must be the same as your Password'
-      } else {
-        if ((!this.error) && (this.property_type) && (!this.property_type === 'FARM' || this.animals) && (this.crops)) {
+      } else if ((!this.error) && (this.property_type) && (!this.property_type === 'FARM' || this.animals) && (this.crops)) {
+        if ((!this.error) && (this.property_name) && (this.property_type) && (!this.property_type === 'FARM' || this.animals) && (this.crops)) {
           try {
             const response = await AuthenticationService.register({
               username: this.username,

@@ -154,6 +154,11 @@ export default {
   methods: {
     async create () {
       // console.log('Debugging', this.$store.state.user.Username, this.property_name, this.street_address, this.city, this.zip, this.acres, this.property_type, this.animals, this.crops, this.isPublic, this.isCommercial)
+      if ((!this.property_name) || (!this.property_type) || (!this.street_address) || (!this.city) || (!this.zip) || (!this.acres)) {
+        this.error = 'Please enter all required information'
+        setTimeout(function () { this.error = null }.bind(this), 2000)
+        return
+      }
       const checkpropertyID = await PropertyService.get_id_by_name({
         // propertyName: 'Kenari Company Farm'
         propertyName: this.property_name
@@ -163,7 +168,7 @@ export default {
       }
       if (this.zip.length !== 5) {
         this.error = 'Please enter 5-digits zip code'
-      } else if (!this.error) {
+      } else if ((!this.error) && (this.property_name) && (this.property_type) && (!this.property_type === 'FARM' || this.animals) && (this.crops)) {
         try {
           const response = await PropertyService.insert({
             username: this.$store.state.user.Username,
