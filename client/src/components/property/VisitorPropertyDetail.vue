@@ -34,11 +34,20 @@
         </div>
       </v-layout>
     </div>
-    <div style="color:red;font-size:25px;">Rate Your Visit, Range : integer from 1 to 5, if not it will be converted into an integer</div>
-    <v-text-field
-            v-model="rating"
-            style="font-size:50px"
-          ></v-text-field>
+
+    <v-layout row>
+      <v-flex xs7>
+        <div style="color:red;font-size:20px;">Rate Your Visit, Range : integer from 1 to 5, if not it will be converted into an integer</div>
+      </v-flex>
+      <v-flex xs2>
+        <v-text-field
+          v-model="rating"
+          style="font-size:50px"
+          label="Rating"
+        ></v-text-field>
+      </v-flex>
+    </v-layout>
+
     <div class="error" v-html="error" />
     <v-btn class="cyan" dark
       @click="log()">

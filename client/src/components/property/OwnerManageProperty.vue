@@ -394,6 +394,9 @@ export default {
           }.bind(this), 2000)
         } catch (error) {
           this.error = error.response.data.error
+          setTimeout(function () {
+            this.error = ''
+          }.bind(this), 2000)
         }
       }
     },
@@ -412,6 +415,10 @@ export default {
       })
       if ((checkpropertyID.data.length !== 0) && (Number(checkpropertyID.data[0].ID).toLocaleString('en-US', {minimumIntegerDigits: 5, useGrouping: false}) !== this.id)) {
         this.error = 'The property name must be unique'
+        setTimeout(function () {
+          this.error = null
+        }.bind(this), 2000)
+        return
       }
       var pattern = /^[0-9]{5}$/
       if (!pattern.test(this.property.Zip)) {
@@ -464,6 +471,9 @@ export default {
       try {
         await PropertyService.delete_property({
           id: this.id
+        })
+        await VisitService.delete_property_visits({
+          id: this.$route.params.id
         })
         this.comment = 'Deleting the Porperty Succeeded'
         setTimeout(function () {

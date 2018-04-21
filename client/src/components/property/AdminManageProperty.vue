@@ -185,6 +185,7 @@
 import PropertyService from '@/services/PropertyService'
 import FarmItemService from '@/services/FarmItemService'
 import HasService from '@/services/HasService'
+import VisitService from '@/services/VisitService'
 
 export default {
   data () {
@@ -390,9 +391,7 @@ export default {
 
         this.comment = 'Updating the Property Succeeded'
         setTimeout(function () {
-          this.$router.push({
-            name: 'confirmed_property_list'
-          })
+          this.$router.go(-1)
         }.bind(this), 2000)
       } catch (error) {
         this.error = error.response.data.error
@@ -402,13 +401,14 @@ export default {
     async deleteProperty () {
       try {
         await PropertyService.delete_property({
-          id: this.id
+          id: this.$route.params.id
+        })
+        await VisitService.delete_property_visits({
+          id: this.$route.params.id
         })
         this.comment = 'Deleting the Porperty Succeeded'
         setTimeout(function () {
-          this.$router.push({
-            name: 'confirmed_property_list'
-          })
+          this.$router.go(-1)
         }.bind(this), 2000)
       } catch (error) {
         this.error = error.response.data.error

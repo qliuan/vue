@@ -82,8 +82,12 @@ module.exports = (app) => {
 
   app.post('/visit_history',
     VisitController.visit_history)
+
   app.post('/delete_property_visits',
-    VisitController.deletePropertyVisits)
+    VisitController.delete_property_visits)
+
+  app.post('/test',
+    VisitController.test)
 
   app.post('/get_visitors',
     UserController.get_visitors)
@@ -114,4 +118,7 @@ module.exports = (app) => {
 
   app.post('/admin_add_item',
     FarmItemController.admin_add_item)
+
+  app.post('delete_property_visits',
+    VisitController.delete_property_visits)
 }
