@@ -412,6 +412,11 @@ export default {
 
     async save () {
       // Update the property
+      if ((!this.property.Name) || (!this.property.PropertyType) || (!this.property.Street) || (!this.property.City) || (!this.property.Zip) || (!this.property.Size)) {
+        this.error = 'Please enter all required information'
+        setTimeout(function () { this.error = null }.bind(this), 2000)
+        return
+      }
       const checkpropertyID = await PropertyService.get_id_by_name({
         // propertyName: 'Kenari Company Farm'
         propertyName: this.property.Name
