@@ -154,9 +154,16 @@ export default {
   methods: {
     async create () {
       // console.log('Debugging', this.$store.state.user.Username, this.property_name, this.street_address, this.city, this.zip, this.acres, this.property_type, this.animals, this.crops, this.isPublic, this.isCommercial)
+      const checkpropertyID = await PropertyService.get_id_by_name({
+        // propertyName: 'Kenari Company Farm'
+        propertyName: this.property_name
+      })
+      if (checkpropertyID.data.length !== 0) {
+        this.error = 'The property name must be unique'
+      }
       if (this.zip.length !== 5) {
         this.error = 'Please enter 5-digits zip code'
-      } else {
+      } else if (!this.error) {
         try {
           const response = await PropertyService.insert({
             username: this.$store.state.user.Username,
@@ -211,9 +218,9 @@ export default {
           }
         }
         // console.log('\n\nCreation Ends Here\n\n', this.error)
-        this.error = 'Creation Succeeded'
-        setTimeout(function () { this.$router.push({ name: 'owner_overview' }) }.bind(this), 2000)
+        this.$router.push({ name: 'owner_overview' })
       }
+      setTimeout(function () { this.error = null }.bind(this), 2000)
     }
   },
   components: {

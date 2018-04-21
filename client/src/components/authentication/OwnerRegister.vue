@@ -179,49 +179,45 @@ export default {
           this.error = error.response.data.error
         }
       }
-    },
-    async property_name (value) {
-      this.error = null
-      const propertyID = await PropertyService.get_id_by_name({
-        // propertyName: 'Kenari Company Farm'
-        propertyName: this.property_name
-      })
-      console.log(propertyID)
-      if (propertyID.data.length !== 0) {
-        console.log('fuck')
-        this.error = 'The property name must be unique'
-      }
     }
   },
   methods: {
     async register () {
-      console.log('register was clicked', this.password, this.confirm_password)
+      const checkpropertyID = await PropertyService.get_id_by_name({
+        // propertyName: 'Kenari Company Farm'
+        propertyName: this.property_name
+      })
+      if (checkpropertyID.data.length !== 0) {
+        this.error = 'The property name must be unique'
+      }
       if (this.zip.length !== 5) {
         this.error = 'Please enter 5-digit zip code'
       } else if (!(this.password === this.confirm_password)) {
         this.error = 'Confirm Password must be the same as your Password'
       } else {
-        try {
-          const response = await AuthenticationService.register({
-            username: this.username,
-            email: this.email,
-            password: this.password,
-            usertype: this.usertype,
-            property_name: this.property_name,
-            street_address: this.street_address,
-            city: this.city,
-            zip: this.zip,
-            acres: this.acres,
-            property_type: this.property_type,
-            animals: this.animals,
-            crops: this.crops,
-            isPublic: this.isPublic,
-            isCommercial: this.isCommercial
+        if (!this.error) {
+          try {
+            const response = await AuthenticationService.register({
+              username: this.username,
+              email: this.email,
+              password: this.password,
+              usertype: this.usertype,
+              property_name: this.property_name,
+              street_address: this.street_address,
+              city: this.city,
+              zip: this.zip,
+              acres: this.acres,
+              property_type: this.property_type,
+              animals: this.animals,
+              crops: this.crops,
+              isPublic: this.isPublic,
+              isCommercial: this.isCommercial
 
-          })
-          console.log(response)
-        } catch (error) {
-          this.error = error.response.data.error
+            })
+            console.log(response)
+          } catch (error) {
+            this.error = error.response.data.error
+          }
         }
         if (!this.error) {
           try {

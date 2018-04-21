@@ -280,9 +280,13 @@ export default {
         return flag
       })
   },
-
+  watch: {
+    async property (value) {
+      var propname = value.Name
+      console.log(propname)
+    }
+  },
   methods: {
-
     async deleteItem (name, type) {
       // console.log('Delete', name, type)
       if (type === 'ANIMAL') {
@@ -380,36 +384,45 @@ export default {
 
     async save () {
       // Update the property
-      try {
-        await PropertyService.update_property({
-          property: this.property,
-          user: this.$store.state.user
-        })
-
-        // Adding Has relations
-        for (let item of this.itemAdding) {
-          // console.log('Adding', item.Name, 'to', this.property.ID)
-          await HasService.insert({
-            propertyID: this.property.ID,
-            farmitem: item.Name
+      const checkpropertyID = await PropertyService.get_id_by_name({
+        // propertyName: 'Kenari Company Farm'
+        propertyName: this.property.Name
+      })
+      if (checkpropertyID.data.length !== 0) {
+        this.error = 'The property name must be unique'
+      }
+      if (!this.error) {
+        try {
+          await PropertyService.update_property({
+            property: this.property,
+            user: this.$store.state.user
           })
-        }
 
-        // Deleting Has relations
-        for (let item of this.itemDeleting) {
-          // console.log('Deleting', item.Name, 'from', this.property.ID)
-          await HasService.delete({
-            propertyID: this.$route.params.id,
-            farmitem: item.Name
-          })
-        }
+          // Adding Has relations
+          for (let item of this.itemAdding) {
+            // console.log('Adding', item.Name, 'to', this.property.ID)
+            await HasService.insert({
+              propertyID: this.property.ID,
+              farmitem: item.Name
+            })
+          }
 
-        this.comment = 'Updating the Property Succeeded, Redirecting to Overview...'
-        setTimeout(function () {
-          this.$router.push({ name: 'owner_overview' })
-        }.bind(this), 3000)
-      } catch (error) {
-        this.error = error.response.data.error
+          // Deleting Has relations
+          for (let item of this.itemDeleting) {
+            // console.log('Deleting', item.Name, 'from', this.property.ID)
+            await HasService.delete({
+              propertyID: this.$route.params.id,
+              farmitem: item.Name
+            })
+          }
+
+          this.comment = 'Updating the Property Succeeded, Redirecting to Overview...'
+          setTimeout(function () {
+            this.$router.push({ name: 'owner_overview' })
+          }.bind(this), 3000)
+        } catch (error) {
+          this.error = error.response.data.error
+        }
       }
     },
 
