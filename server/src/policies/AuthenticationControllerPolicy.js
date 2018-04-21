@@ -55,7 +55,6 @@ module.exports = {
           })
       }
     } else {
-      console.log(req.body.zip)
       next() // go the next line and continue
     }
   }
