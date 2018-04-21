@@ -158,8 +158,20 @@ export default {
     },
 
     async admin_add_item () {
-      if (this.newItemName === '') {
+      if (this.newItemType === '') {
+        this.error = 'Please enter the type of the item you wish to add'
+        setTimeout(function () {
+          this.error = ''
+          this.newItemName = ''
+          this.newItemType = ''
+        }.bind(this), 2000)
+      } if (this.newItemName === '') {
         this.error = 'Please enter the name of the item you wish to add'
+        setTimeout(function () {
+          this.error = ''
+          this.newItemName = ''
+          this.newItemType = ''
+        }.bind(this), 2000)
       } else {
         var type = this.newItemType
         var name = this.newItemName

@@ -66,7 +66,8 @@ module.exports = {
     })
   },
 
-  async deletePropertyVisits (req, res) {
+  async delete_property_visits (req, res) {
+    console.log('something hap')
     var sql = `delete from Visit where PropertyID = ?;`
     var sqlPara = [req.body.propertyID]
     connection.query(sql, sqlPara, function (err, result) {
@@ -79,5 +80,10 @@ module.exports = {
       console.log(result)
       res.send(result)
     })
+  },
+
+  async test (req, res) {
+    console.log('testing')
+    res.send({message: 'debugging'})
   }
 }
