@@ -66,7 +66,7 @@ export default {
       crops: [],
       titles: ['Name', 'Owner', 'Email', 'Street', 'City', 'Zip', 'Size', 'PropertyType', 'IsPublic', 'IsCommercial', 'ID', 'IsValid', 'Avg_Rating', 'Visits'],
       error: null,
-      rating: 1.0,
+      rating: null,
       username: ''
     }
   },
