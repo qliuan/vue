@@ -390,6 +390,9 @@ export default {
           }.bind(this), 2000)
         } catch (error) {
           this.error = error.response.data.error
+          setTimeout(function () {
+            this.error = ''
+          }.bind(this), 2000)
         }
       }
     },
