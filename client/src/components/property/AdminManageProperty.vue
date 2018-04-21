@@ -382,9 +382,7 @@ export default {
 
         this.comment = 'Updating the Property Succeeded'
         setTimeout(function () {
-          this.$router.push({
-            name: 'confirmed_property_list'
-          })
+          this.$router.go(-1)
         }.bind(this), 2000)
       } catch (error) {
         this.error = error.response.data.error
@@ -398,9 +396,7 @@ export default {
         })
         this.comment = 'Deleting the Porperty Succeeded'
         setTimeout(function () {
-          this.$router.push({
-            name: 'confirmed_property_list'
-          })
+          this.$router.go(-1)
         }.bind(this), 2000)
       } catch (error) {
         this.error = error.response.data.error
