@@ -64,5 +64,20 @@ module.exports = {
       console.log(result)
       res.send(result)
     })
+  },
+
+  async deletePropertyVisits (req, res) {
+    var sql = `delete from Visit where PropertyID = ?;`
+    var sqlPara = [req.body.propertyID]
+    connection.query(sql, sqlPara, function (err, result) {
+      if (err) {
+        res.status(400).send({
+          error: 'failed to delete all property visits'
+        })
+        return
+      }
+      console.log(result)
+      res.send(result)
+    })
   }
 }
