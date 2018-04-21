@@ -211,6 +211,7 @@
 import PropertyService from '@/services/PropertyService'
 import FarmItemService from '@/services/FarmItemService'
 import HasService from '@/services/HasService'
+import VisitService from '@/services/VisitService'
 
 export default {
   data () {
@@ -372,22 +373,28 @@ export default {
     },
 
     async itemRequestApproval () {
-      var type = this.itemApprovalType
-      var name = this.itemApprovalName
-      // console.log('Requesting', type, name)
-      try {
-        await FarmItemService.add_pending_item({
-          Name: name,
-          Type: type
-        })
-        this.comment = 'Adding Pending Item Succeeded'
-        setTimeout(function () {
-          this.comment = ''
-          this.itemApprovalName = ''
-          this.itemApprovalType = ''
-        }.bind(this), 2000)
-      } catch (error) {
-        this.error = error.response.data.error
+      if (this.itemApprovalType === '') {
+        this.error = 'Please select the type of the item you requested'
+      } else if (this.itemApprovalName === '') {
+        this.error = 'Please enter the name of the item you requested'
+      } else {
+        var type = this.itemApprovalType
+        var name = this.itemApprovalName
+        // console.log('Requesting', type, name)
+        try {
+          await FarmItemService.add_pending_item({
+            Name: name,
+            Type: type
+          })
+          this.comment = 'Adding Pending Item Succeeded'
+          setTimeout(function () {
+            this.comment = ''
+            this.itemApprovalName = ''
+            this.itemApprovalType = ''
+          }.bind(this), 2000)
+        } catch (error) {
+          this.error = error.response.data.error
+        }
       }
     },
 
@@ -446,6 +453,18 @@ export default {
         } catch (error) {
           this.error = error.response.data.error
         }
+
+        // Deleting all logs
+        await VisitService.delete_property_visits({
+          propertyID: this.$route.params.id
+        })
+
+        this.comment = 'Updating the Property Succeeded, Redirecting to Overview...'
+        setTimeout(function () {
+          this.$router.push({ name: 'owner_overview' })
+        }.bind(this), 3000)
+      } catch (error) {
+        this.error = error.response.data.error
       }
     },
 
