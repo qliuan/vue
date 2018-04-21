@@ -3,17 +3,17 @@ const connection = config.connection
 
 module.exports = {
   async register (req, res) {
-    var sql = `select Name from FarmItem where Type = 'ANIMAL';`// dummy value
+    var sql = `select Name from FarmItem where Type = 'ANIMAL' and IsApproved;`// dummy value
     if (req.body.Proptype === 'FARM') {
       if (req.body.isAnimal === true) {
-        sql = `select Name from FarmItem where Type = 'ANIMAL';`
+        sql = `select Name from FarmItem where Type = 'ANIMAL' and IsApproved;`
       } else {
-        sql = `select Name from FarmItem where Type != 'ANIMAL';`
+        sql = `select Name from FarmItem where Type != 'ANIMAL' and IsApproved;`
       }
     } else if (req.body.Proptype === 'GARDEN') {
-      sql = `select Name from FarmItem where Type = 'FLOWER' or Type ='VEGETABLE';`
+      sql = `select Name from FarmItem where (Type = 'FLOWER' or Type ='VEGETABLE') and IsApproved;`
     } else {
-      sql = `select Name from FarmItem where Type = 'FRUIT' or Type ='NUT';`
+      sql = `select Name from FarmItem where (Type = 'FRUIT' or Type ='NUT') and IsApproved;`
     }
     connection.query(sql, function (err, result) {
       if (err) {

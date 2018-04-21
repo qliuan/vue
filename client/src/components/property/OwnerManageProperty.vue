@@ -403,7 +403,7 @@ export default {
         // propertyName: 'Kenari Company Farm'
         propertyName: this.property.Name
       })
-      if (checkpropertyID.data.length !== 0) {
+      if ((checkpropertyID.data.length !== 0) && (Number(checkpropertyID.data[0].ID).toLocaleString('en-US', {minimumIntegerDigits: 5, useGrouping: false}) !== this.id)) {
         this.error = 'The property name must be unique'
       }
       var pattern = /^[0-9]{5}$/

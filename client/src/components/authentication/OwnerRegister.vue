@@ -182,7 +182,8 @@ export default {
             })
           console.log(crops)
         } catch (error) {
-          this.error = error.response.data.error
+          console.log(error)
+          // this.error = error.response.data.error
         }
       } else {
         try {
