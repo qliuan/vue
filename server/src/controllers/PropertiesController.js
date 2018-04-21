@@ -65,7 +65,7 @@ module.exports = {
     connection.query(sql, sqlPara, function (err, result) {
       if (err) {
         res.status(400).send({
-          error: 'Errors encountered from inserting into properties'
+          error: 'Please enter all information for the properties : Name, Size, IsCommercial, IsPublic, Street, City, Zip, PropertyType, Farmitems'
         })
         return
       }

@@ -143,7 +143,6 @@ export default {
   // v-model is for 2-way binding
   watch: {
     async property_type (value) {
-      console.log('property_type', value)
       if (value === 'FARM') {
         try {
           const animals = await FarmItemService.FarmItem_register({
@@ -161,29 +160,9 @@ export default {
             Proptype: value,
             isAnimal: false
           })
-          this.cropOptions = crops.data.filter( // for all objects
-            function (obj) { // for all keys
-              if (obj.Type.indexOf('ANIMAL') > -1) {
-                return false
-              } else {
-                console.log('Filter by Property Type', value)
-                if (value === 'GARDEN') {
-                  var flag1 = obj.Type.indexOf('FLOWER') > -1 || obj.Type.indexOf('VEGETABLE') > -1
-                  console.log(obj.Name, obj.Type, flag1)
-                  return flag1
-                } else if (value === 'ORCHARD') {
-                  var flag2 = obj.Type.indexOf('NUT') > -1 || obj.Type.indexOf('FRUIT') > -1
-                  console.log(obj.Name, obj.Type, flag2)
-                  return flag2
-                } else {
-                  return true
-                }
-              }
-            })
-          console.log(crops)
+          this.cropOptions = crops.data
         } catch (error) {
-          console.log(error)
-          // this.error = error.response.data.error
+          this.error = error.response.data.error
         }
       } else {
         try {
@@ -193,7 +172,6 @@ export default {
           })
           this.cropOptions = crops.data
           this.animalOptions = []
-          console.log(crops)
         } catch (error) {
           this.error = error.response.data.error
         }
@@ -211,12 +189,15 @@ export default {
       }
       console.log('register was clicked', this.password, this.confirm_password)
       var pattern = /^[0-9]{5}$/
-      if (!pattern.test(this.zip)) {
+      var sizepattern = /^[0-9]{1,10}$/
+      if (!sizepattern.test(this.acres)) {
+        this.error = 'Please enter a valid Acres in integer from 1 to 10 digits'
+      } else if (!pattern.test(this.zip)) {
         this.error = 'Please enter 5-digit zip code'
       } else if (!(this.password === this.confirm_password)) {
         this.error = 'Confirm Password must be the same as your Password'
       } else {
-        if (!this.error) {
+        if ((!this.error) && (this.property_type) && (!this.property_type === 'FARM' || this.animals) && (this.crops)) {
           try {
             const response = await AuthenticationService.register({
               username: this.username,
@@ -324,6 +305,9 @@ export default {
           this.error = null
         }.bind(this), 2000)
       }
+      setTimeout(function () {
+        this.error = null
+      }.bind(this), 2000)
     }
   },
   components: {
