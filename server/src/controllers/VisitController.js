@@ -67,7 +67,7 @@ module.exports = {
   },
 
   async delete_property_visits (req, res) {
-    console.log('something hap')
+    console.log('\n\nsomething happend\n\n')
     var sql = `delete from Visit where PropertyID = ?;`
     var sqlPara = [req.body.propertyID]
     connection.query(sql, sqlPara, function (err, result) {
