@@ -413,7 +413,7 @@ export default {
         // propertyName: 'Kenari Company Farm'
         propertyName: this.property.Name
       })
-      if (checkpropertyID.data.length !== 0) {
+      if ((checkpropertyID.data.length !== 0) && (Number(checkpropertyID.data[0].ID).toLocaleString('en-US', {minimumIntegerDigits: 5, useGrouping: false}) !== this.id)) {
         this.error = 'The property name must be unique'
         setTimeout(function () {
           this.error = null
@@ -452,12 +452,10 @@ export default {
               farmitem: item.Name
             })
           }
-
           // Deleting all logs
           await VisitService.delete_property_visits({
             propertyID: this.$route.params.id
           })
-
           this.comment = 'Updating the Property Succeeded, Redirecting to Overview...'
           setTimeout(function () {
             this.$router.push({ name: 'owner_overview' })
