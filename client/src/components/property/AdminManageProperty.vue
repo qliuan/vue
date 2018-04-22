@@ -348,6 +348,27 @@ export default {
 
     async save () {
       // Update the property
+      if ((!this.property.Name) || (!this.property.PropertyType) || (!this.property.Street) || (!this.property.City) || (!this.property.Zip) || (!this.property.Size)) {
+        this.error = 'Please enter all required information'
+        setTimeout(function () { this.error = null }.bind(this), 2000)
+        return
+      }
+      const checkpropertyID = await PropertyService.get_id_by_name({
+        // propertyName: 'Kenari Company Farm'
+        propertyName: this.property.Name
+      })
+      if ((checkpropertyID.data.length !== 0) && (Number(checkpropertyID.data[0].ID).toLocaleString('en-US', {minimumIntegerDigits: 5, useGrouping: false}) !== this.id)) {
+        this.error = 'The property name must be unique'
+        return
+      }
+      var sizepattern = /^[0-9]{1,10}$/
+      if (!sizepattern.test(this.property.Size)) {
+        this.error = 'Please enter a valid Acres in integer from 1 to 10 digits'
+        setTimeout(function () {
+          this.error = null
+        }.bind(this), 2000)
+        return
+      }
       var pattern = /^[0-9]{5}$/
       if (!pattern.test(this.property.Zip)) {
         this.error = 'Please enter 5-digit zip code'

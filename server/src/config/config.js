@@ -7,7 +7,7 @@ var connect = mysql.createConnection({
 })
 
 module.exports = {
-  port: process.env.PORT || 8088,
+  port: process.env.PORT || 9088,
   connection: connect,
   authentication: {
     jwtSecret: process.env.JWT_SECRET || 'secret'

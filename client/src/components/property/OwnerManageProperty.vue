@@ -399,6 +399,9 @@ export default {
           }.bind(this), 2000)
         }
       }
+      setTimeout(function () {
+        this.error = ''
+      }.bind(this), 2000)
     },
 
     async back () {
@@ -409,12 +412,25 @@ export default {
 
     async save () {
       // Update the property
+      if ((!this.property.Name) || (!this.property.PropertyType) || (!this.property.Street) || (!this.property.City) || (!this.property.Zip) || (!this.property.Size)) {
+        this.error = 'Please enter all required information'
+        setTimeout(function () { this.error = null }.bind(this), 2000)
+        return
+      }
       const checkpropertyID = await PropertyService.get_id_by_name({
         // propertyName: 'Kenari Company Farm'
         propertyName: this.property.Name
       })
-      if (checkpropertyID.data.length !== 0) {
+      if ((checkpropertyID.data.length !== 0) && (Number(checkpropertyID.data[0].ID).toLocaleString('en-US', {minimumIntegerDigits: 5, useGrouping: false}) !== this.id)) {
         this.error = 'The property name must be unique'
+        setTimeout(function () {
+          this.error = null
+        }.bind(this), 2000)
+        return
+      }
+      var sizepattern = /^[0-9]{1,10}$/
+      if (!sizepattern.test(this.property.Size)) {
+        this.error = 'Please enter a valid Acres in integer from 1 to 10 digits'
         setTimeout(function () {
           this.error = null
         }.bind(this), 2000)
@@ -452,12 +468,10 @@ export default {
               farmitem: item.Name
             })
           }
-
           // Deleting all logs
           await VisitService.delete_property_visits({
             propertyID: this.$route.params.id
           })
-
           this.comment = 'Updating the Property Succeeded, Redirecting to Overview...'
           setTimeout(function () {
             this.$router.push({ name: 'owner_overview' })
