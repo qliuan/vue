@@ -401,10 +401,6 @@ export default {
             farmitem: item.Name
           })
         }
-        // Deleting all logs
-        await VisitService.delete_property_visits({
-          propertyID: this.$route.params.id
-        })
 
         this.comment = 'Updating the Property Succeeded'
         setTimeout(function () {
