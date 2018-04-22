@@ -213,9 +213,9 @@ export default {
 
     // converting the formats
     pList.forEach(function (property) { // converting the formats
-      property.IsPublic = Boolean(Number(property.IsPublic))
-      property.IsCommercial = Boolean(Number(property.IsCommercial))
-      property.IsValid = Boolean(Number(property.IsValid))
+      property.IsPublic = Boolean(Number(property.IsPublic)).toString()
+      property.IsCommercial = Boolean(Number(property.IsCommercial)).toString()
+      property.IsValid = Boolean(Number(property.IsValid)).toString()
       property.ID = Number(property.ID).toLocaleString('en-US', {minimumIntegerDigits: 5, useGrouping: false})
     })
     this.property = pList[0]
