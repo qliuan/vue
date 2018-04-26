@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <h2>This is a Vue.js App for GaTech CS 4400 2018 Spring</h2>
     <h2>Authors</h2>
     <ul>
       <li>
@@ -36,7 +37,7 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'This is a Vue.js App for GaTech CS 4400 2018 Spring'
+      msg: 'Atlanta Farm, Garden and Orchard'
     }
   }
 }
