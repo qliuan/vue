@@ -15,7 +15,12 @@ This is the final project for Georgia Tech CS 4400 in 2018 Spring built using no
 Explain how to get the system running
 
 ### Before running
-Since all the modules are ignored when uploading to github repo, we have to install all packages required.  
+The first thing to do is to make sure your nodejs package manager (npm) works. The following command gives you the version of npm that you are using. The project is built on npm 5.6.0
+```
+npm -v
+```
+
+Since all the modules are ignored when uploading to github repo, we have to install all packages required.
 (1) go to /client and run
 ```
 npm install
@@ -24,6 +29,11 @@ npm install
 ```
 npm install
 ```
+These commands would install all the packages described in package.json files in both server and client folders and than the project is ready to start.
+
+### Database
+We are using the MySQL server provided by Geogia Tech and it may not be valid after May 2018.
+The connection configuration is stated in /server/src/config/config.js, make sure to change it.
 
 ### Run the client
 After the installing is finished, go to /client and run the client project first

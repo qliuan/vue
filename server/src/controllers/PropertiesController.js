@@ -91,15 +91,24 @@ module.exports = {
   async update (req, res) {
     var property = req.body.property
     var user = req.body.user
+
+    if (typeof property.IsCommercial === 'string') {
+      property.IsCommercial = (property.IsCommercial === 'true')
+    }
+    if (typeof property.IsPublic === 'string') {
+      property.IsPublic = (property.IsPublic === 'true')
+    }
+    console.log('\n\nUpdate Property', property, '\n\n')
+
     var sql = `update Property set Name=?, Size=?, IsCommercial=?, IsPublic=?, Street=?, City=?, Zip=?, ApprovedBy=? where ID=?`
     var sqlPara = []
+
     if (user.UserType === 'OWNER') {
       sqlPara = [property.Name, property.Size, property.IsCommercial, property.IsPublic, property.Street, property.City, property.Zip, null, property.ID]
     } else {
       sqlPara = [property.Name, property.Size, property.IsCommercial, property.IsPublic, property.Street, property.City, property.Zip, user.Username, property.ID]
     }
 
-    // var sqlPara = []
     connection.query(sql, sqlPara, function (err, result) {
       if (err) {
         res.status(400).send({

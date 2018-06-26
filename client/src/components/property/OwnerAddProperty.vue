@@ -116,6 +116,8 @@ export default {
   // v-model is for 2-way binding
   watch: {
     async property_type (value) {
+      this.animals = ''
+      this.crops = ''
       if (value === 'FARM') {
         try {
           const animals = await FarmItemService.FarmItem_register({
@@ -154,7 +156,12 @@ export default {
   methods: {
     async create () {
       // console.log('Debugging', this.$store.state.user.Username, this.property_name, this.street_address, this.city, this.zip, this.acres, this.property_type, this.animals, this.crops, this.isPublic, this.isCommercial)
-      if ((!this.property_name) || (!this.property_type) || (!this.street_address) || (!this.city) || (!this.zip) || (!this.acres)) {
+      if ((!this.property_name) || (!this.property_type) || (!this.street_address) || (!this.city) || (!this.zip) || (!this.acres) || (!this.crops)) {
+        this.error = 'Please enter all required information'
+        setTimeout(function () { this.error = null }.bind(this), 2000)
+        return
+      }
+      if ((this.property_type === 'FARM') && (!this.animals)) {
         this.error = 'Please enter all required information'
         setTimeout(function () { this.error = null }.bind(this), 2000)
         return
@@ -184,7 +191,7 @@ export default {
       }
       if (this.zip.length !== 5) {
         this.error = 'Please enter 5-digits zip code'
-      } else if ((!this.error) && (this.property_name) && (this.property_type) && (!this.property_type === 'FARM' || this.animals) && (this.crops)) {
+      } else if ((!this.error)) {
         try {
           const response = await PropertyService.insert({
             username: this.$store.state.user.Username,
